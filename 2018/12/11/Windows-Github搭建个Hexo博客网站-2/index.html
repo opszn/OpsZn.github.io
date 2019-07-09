@@ -121,25 +121,26 @@ daovoice('update');
 
 
 
-<meta name="description" content="Windows+Github搭建个Hexo博客网站-1 前言: 偶然在了解到Hexo，感觉和Typecho或WordPress还是有蛮多的区别。于是兴致勃勃的搭建了一个博客网站，点击上车。那么期间也是磕磕绊绊的遇到很多的坑，也是结合和很多大佬的文档，那么在此呢还是想把我个人搭建时遇到的问题分享一下，希望可以帮助到在看的你。 原理：本地搭建Hexo博客网站，提交GitHub托管。   本地环境： 本">
+<meta name="description" content="Windows+Github搭建个Hexo博客网站-2 前情回顾： 在上一次的文章里，我们在win端也就是我们的本地环境搭建了一个Hexo的博客网站，回顾一下需要注意的地方：  nodejs也可以用npm的方式进行安装  npm从国外的服务器取到插件安装，所以即便是网速够快可能也会出现错误或者缓慢的现象，我们可以改用阿里的镜像服务器进行安装，执行下述命令更改：  1234&amp;gt;    $ npm">
 <meta name="keywords" content="Hexo">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Windows+Github搭建个Hexo博客网站-1">
-<meta property="og:url" content="https://www.opszn.com/2018/12/09/Windows-Github搭建个Hexo博客网站-1/index.html">
+<meta property="og:title" content="Windows+Github搭建个Hexo博客网站-2">
+<meta property="og:url" content="https://www.opszn.com/2018/12/11/Windows-Github搭建个Hexo博客网站-2/index.html">
 <meta property="og:site_name" content="詹楠博客">
-<meta property="og:description" content="Windows+Github搭建个Hexo博客网站-1 前言: 偶然在了解到Hexo，感觉和Typecho或WordPress还是有蛮多的区别。于是兴致勃勃的搭建了一个博客网站，点击上车。那么期间也是磕磕绊绊的遇到很多的坑，也是结合和很多大佬的文档，那么在此呢还是想把我个人搭建时遇到的问题分享一下，希望可以帮助到在看的你。 原理：本地搭建Hexo博客网站，提交GitHub托管。   本地环境： 本">
+<meta property="og:description" content="Windows+Github搭建个Hexo博客网站-2 前情回顾： 在上一次的文章里，我们在win端也就是我们的本地环境搭建了一个Hexo的博客网站，回顾一下需要注意的地方：  nodejs也可以用npm的方式进行安装  npm从国外的服务器取到插件安装，所以即便是网速够快可能也会出现错误或者缓慢的现象，我们可以改用阿里的镜像服务器进行安装，执行下述命令更改：  1234&amp;gt;    $ npm">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://www.opszn.com/2018/12/09/Windows-Github搭建个Hexo博客网站-1/winver.jpg">
-<meta property="og:image" content="https://www.opszn.com/2018/12/09/Windows-Github搭建个Hexo博客网站-1/git_client.png">
-<meta property="og:image" content="https://www.opszn.com/2018/12/09/Windows-Github搭建个Hexo博客网站-1/nodejs_i.png">
-<meta property="og:image" content="https://www.opszn.com/2018/12/09/Windows-Github搭建个Hexo博客网站-1/hexo_i.png">
-<meta property="og:image" content="https://www.opszn.com/2018/12/09/Windows-Github搭建个Hexo博客网站-1/hexo_v.png">
-<meta property="og:image" content="https://www.opszn.com/2018/12/09/Windows-Github搭建个Hexo博客网站-1/hexo_s.png">
-<meta property="og:updated_time" content="2019-07-09T02:30:55.563Z">
+<meta property="og:image" content="https://www.opszn.com/2018/12/11/Windows-Github搭建个Hexo博客网站-2/Github_signup.png">
+<meta property="og:image" content="https://www.opszn.com/2018/12/11/Windows-Github搭建个Hexo博客网站-2/GitHub_Create_Repository.png">
+<meta property="og:image" content="https://www.opszn.com/2018/12/11/Windows-Github搭建个Hexo博客网站-2/New_Repos.png">
+<meta property="og:image" content="https://www.opszn.com/2018/12/11/Windows-Github搭建个Hexo博客网站-2/sshkey.png">
+<meta property="og:image" content="https://www.opszn.com/2018/12/11/Windows-Github搭建个Hexo博客网站-2/Add_sshkey.png">
+<meta property="og:image" content="https://www.opszn.com/2018/12/11/Windows-Github搭建个Hexo博客网站-2/test_connection.png">
+<meta property="og:image" content="https://www.opszn.com/2018/12/11/Windows-Github搭建个Hexo博客网站-2/deploy.png">
+<meta property="og:updated_time" content="2019-07-09T03:48:16.152Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Windows+Github搭建个Hexo博客网站-1">
-<meta name="twitter:description" content="Windows+Github搭建个Hexo博客网站-1 前言: 偶然在了解到Hexo，感觉和Typecho或WordPress还是有蛮多的区别。于是兴致勃勃的搭建了一个博客网站，点击上车。那么期间也是磕磕绊绊的遇到很多的坑，也是结合和很多大佬的文档，那么在此呢还是想把我个人搭建时遇到的问题分享一下，希望可以帮助到在看的你。 原理：本地搭建Hexo博客网站，提交GitHub托管。   本地环境： 本">
-<meta name="twitter:image" content="https://www.opszn.com/2018/12/09/Windows-Github搭建个Hexo博客网站-1/winver.jpg">
+<meta name="twitter:title" content="Windows+Github搭建个Hexo博客网站-2">
+<meta name="twitter:description" content="Windows+Github搭建个Hexo博客网站-2 前情回顾： 在上一次的文章里，我们在win端也就是我们的本地环境搭建了一个Hexo的博客网站，回顾一下需要注意的地方：  nodejs也可以用npm的方式进行安装  npm从国外的服务器取到插件安装，所以即便是网速够快可能也会出现错误或者缓慢的现象，我们可以改用阿里的镜像服务器进行安装，执行下述命令更改：  1234&amp;gt;    $ npm">
+<meta name="twitter:image" content="https://www.opszn.com/2018/12/11/Windows-Github搭建个Hexo博客网站-2/Github_signup.png">
 
 
 
@@ -169,13 +170,13 @@ daovoice('update');
 
 
 
-  <link rel="canonical" href="https://www.opszn.com/2018/12/09/Windows-Github搭建个Hexo博客网站-1/">
+  <link rel="canonical" href="https://www.opszn.com/2018/12/11/Windows-Github搭建个Hexo博客网站-2/">
 
 
 
 
 
-  <title>Windows+Github搭建个Hexo博客网站-1 | 詹楠博客</title>
+  <title>Windows+Github搭建个Hexo博客网站-2 | 詹楠博客</title>
   
 
 
@@ -347,7 +348,7 @@ daovoice('update');
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.opszn.com/2018/12/09/Windows-Github搭建个Hexo博客网站-1/">
+    <link itemprop="mainEntityOfPage" href="https://www.opszn.com/2018/12/11/Windows-Github搭建个Hexo博客网站-2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zhan Nan">
@@ -364,7 +365,7 @@ daovoice('update');
 
         
         
-          <h1 class="post-title" itemprop="name headline">Windows+Github搭建个Hexo博客网站-1</h1>
+          <h1 class="post-title" itemprop="name headline">Windows+Github搭建个Hexo博客网站-2</h1>
         
 
         <div class="post-meta">
@@ -376,8 +377,8 @@ daovoice('update');
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-09T14:45:45+08:00">
-                2018-12-09
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-11T10:10:40+08:00">
+                2018-12-11
               </time>
             
 
@@ -408,7 +409,7 @@ daovoice('update');
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  955
+                  924
                 </span>
               
 
@@ -445,68 +446,82 @@ daovoice('update');
       
 
       
-        <h1 id="Windows-Github搭建个Hexo博客网站-1"><a href="#Windows-Github搭建个Hexo博客网站-1" class="headerlink" title="Windows+Github搭建个Hexo博客网站-1"></a>Windows+Github搭建个Hexo博客网站-1</h1><ul>
-<li><h2 id="前言"><a href="#前言" class="headerlink" title="前言:"></a>前言:</h2><blockquote>
-<p>偶然在了解到Hexo，感觉和Typecho或WordPress还是有蛮多的区别。于是兴致勃勃的搭建了一个博客网站，<a href="https://www.opszn.com/">点击上车</a>。那么期间也是磕磕绊绊的遇到很多的坑，也是结合和很多大佬的文档，那么在此呢还是想把我个人搭建时遇到的问题分享一下，希望可以帮助到在看的你。</p>
-<p>原理：本地搭建Hexo博客网站，提交GitHub托管。</p>
-</blockquote>
-</li>
-<li><h2 id="本地环境："><a href="#本地环境：" class="headerlink" title="本地环境："></a>本地环境：</h2><blockquote>
-<p>本地的环境主要就是一个系统版本了，我的是Win10企业版。</p>
-</blockquote>
-<p><img src="/2018/12/09/Windows-Github搭建个Hexo博客网站-1/winver.jpg" alt="Verison of OS"></p>
-</li>
-<li><h2 id="需要用到的软件："><a href="#需要用到的软件：" class="headerlink" title="需要用到的软件："></a>需要用到的软件：</h2><p>git官方下载地址：<a href="https://git-scm.com/downloads" target="_blank" rel="noopener">https://git-scm.com/downloads</a></p>
-<p>nodejs官方下载地址: <a href="http://nodejs.cn/download/" target="_blank" rel="noopener">http://nodejs.cn/download/</a></p>
-<p>hexo官方安装地址： <a href="https://hexo.io/zh-cn/" target="_blank" rel="noopener">https://hexo.io/zh-cn/</a></p>
-</li>
-<li><p>git安装：</p>
-<blockquote>
-<p>git可在Win端提供一个类似Linux的操作命令行窗口，当然还负责与Github进行交互，这个后面再说。</p>
-<p>那这个安装的话就不多赘述了，Win端安装你懂的，图形化安装不要太简单（不过要注意选择自己的安装路径，我是选择装到D盘，系统盘空间特别小的还是要注意换一个路径哈）。怎么才算安装成功呢，我们等安装结束后再桌面上单击一下鼠标右键，如果出现如下图红框中的两个图标，恭喜你已经安装成功。</p>
-</blockquote>
-<p>  <img src="/2018/12/09/Windows-Github搭建个Hexo博客网站-1/git_client.png" alt="Git`installation success "></p>
+        <h1 id="Windows-Github搭建个Hexo博客网站-2"><a href="#Windows-Github搭建个Hexo博客网站-2" class="headerlink" title="Windows+Github搭建个Hexo博客网站-2"></a>Windows+Github搭建个Hexo博客网站-2</h1><ul>
+<li><h2 id="前情回顾："><a href="#前情回顾：" class="headerlink" title="前情回顾："></a>前情回顾：</h2><blockquote>
+<p>在上一次的文章里，我们在win端也就是我们的本地环境搭建了一个Hexo的博客网站，回顾一下需要注意的地方：</p>
+<ol>
+<li><p>nodejs也可以用npm的方式进行安装</p>
 <ul>
-<li><p>nodejs安装：</p>
-<blockquote>
-<p>安装同上哈（但是注意安装过程中“Add to PATH”选项，默认勾上的但是检查一下记得勾上）同样的等待安装结束后验证是否安装成功。这里我们可以选择win + R 启用cmd输入</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; $ node -v </span><br><span class="line">&gt; $ npm -v</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-<p>查看我们安装的版本信息，也可以用我们刚才安装的Git Bash 进行验证，我这里选用后者结果如下图。有相应的版本信息回复表示我们已经安装完成了，在此恭喜 ~</p>
-</blockquote>
-<p><img src="/2018/12/09/Windows-Github搭建个Hexo博客网站-1/nodejs_i.png" alt="Nodejs`installation success "></p>
-</li>
-<li><p>hexo安装：</p>
-<p>在其官网上呢很简洁的给出了几条命令，我们一步步的来看。</p>
-<p><img src="/2018/12/09/Windows-Github搭建个Hexo博客网站-1/hexo_i.png" alt="The sample order"></p>
-<blockquote>
-<p>我们还是需要用到Git Bash进行安装，但是安装之前呢我们需要选择一个路径哈（默认点开Git Bash工作空间是在C）选择D盘一个已经创建的目录（我的是hexo）</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt; $ cd D:hexo</span><br><span class="line">&gt; $ npm install hexo-cli -g</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-<p>等待安装完成，按照惯例还是验证一下安装是否成功</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; $ hexo -v</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-<img src="/2018/12/09/Windows-Github搭建个Hexo博客网站-1/hexo_v.png">
-
-<p>如图表示安装成功。</p>
-</blockquote>
-</li>
-<li><p>hexo生成博客等操作：</p>
-<blockquote>
-<p>紧跟上一步，我们当前的工作目录是在D下hexo中，输入命令进行博客初始化等操作</p>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; $ hexo init myblog  <span class="comment"># 初始化，这里的myblog是我自己定义的，可依照个人喜好更改</span></span><br><span class="line">&gt; $ cd myblog</span><br><span class="line">&gt; $ hexo generate     <span class="comment"># 生成静态页面，可以简写为hexo g</span></span><br><span class="line">&gt; $ hexo server       <span class="comment"># 开启服务器，可简写为hexo s(开启服务器的操作最好都在根目录下进行)</span></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-</blockquote>
-<blockquote>
-<p>输入最后一条命令后我们会看到下图，留意最后一行的内容，http的链接就是我们本地的访问地址复制该链接到浏览器中即可（有些PC输入该链接无法访问，是因为本地占用了4000端口，我们可以更改一下端口信息比如<a href="http://localhost:5000" target="_blank" rel="noopener">http://localhost:5000</a> ,这样就能访问到hexo博客网站了），关闭服务器我们按照下面的提示选择Ctrl + C即可关闭本地服务器。</p>
-</blockquote>
-</li>
+<li>npm从<a href="http://registry.npmjs.org" target="_blank" rel="noopener">国外的服务器</a>取到插件安装，所以即便是网速够快可能也会出现错误或者缓慢的现象，我们可以改用<a href="http://npm.taobao.org" target="_blank" rel="noopener">阿里的镜像服务器</a>进行安装，执行下述命令更改：</li>
 </ul>
-<p><img src="/2018/12/09/Windows-Github搭建个Hexo博客网站-1/hexo_s.png" alt="Hexo server start &amp; stop"></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;    $ npm config set registry https://registry.npm.taobao.org --global</span><br><span class="line">&gt;    $ npm config set disturl https://npm.taobao.org/dist --global</span><br><span class="line">&gt;    $ npm config get registry  <span class="comment">#查看本地源</span></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
 </li>
-<li><h2 id="至此，我们在本地的测试环境（或者说客户端环境就已经搭建完成），在下一篇文章中，我们将把我们的本地环境远程不熟到GIthub实现公网环境访问。"><a href="#至此，我们在本地的测试环境（或者说客户端环境就已经搭建完成），在下一篇文章中，我们将把我们的本地环境远程不熟到GIthub实现公网环境访问。" class="headerlink" title="至此，我们在本地的测试环境（或者说客户端环境就已经搭建完成），在下一篇文章中，我们将把我们的本地环境远程不熟到GIthub实现公网环境访问。"></a>至此，我们在本地的测试环境（或者说客户端环境就已经搭建完成），在下一篇文章中，我们将把我们的本地环境远程不熟到GIthub实现公网环境访问。</h2></li>
+</ol>
+</blockquote>
+<blockquote>
+<ul>
+<li>可以使用上述最后一条命令查看是否成功更换阿里镜像，之后我们就可以完全用cnpm替代npm进行安装升级等一系列的操作。</li>
+</ul>
+<ol start="2">
+<li><p>在上文我们首先在D盘中创建了一个hexo目录，执行初始化<code>hexo init</code>操作的时候如果后面没有另外加博客名会安装在hexo目录下，看到“Start blogging with Hexo！”表示我们初始化就成功咯。</p>
+</li>
+<li><p>开启服务器后浏览器本地访问不成功，端口问题，更换5000端口在次尝试，可以使用Ctrl + F5强制刷新网页。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;    $ hexo s -p <span class="number">5000</span>    <span class="comment"># p是port的简写，端口的话可以自己定义</span></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</blockquote>
+<blockquote>
+</blockquote>
+</li>
+<li><h2 id="本期概要："><a href="#本期概要：" class="headerlink" title="本期概要："></a>本期概要：</h2><p>远程部署Hexo实现公网环境访问（<strong>真·概要</strong>）</p>
+</li>
+<li><h2 id="GitHub："><a href="#GitHub：" class="headerlink" title="GitHub："></a>GitHub：</h2><blockquote>
+<p>做开发的小伙伴应该是无人不知这个网站，那么对于运维来说应该也是哈，我们很多都可能用到GitHub或者GItlab比如CI/CD，扯远了，我们尽量保证颗粒度最小哈。好的我们进入正题，首先我们打开其<a href="https://github.com/" target="_blank" rel="noopener">官网</a>，默认主界面如下，我们按照我标注 的一步步进行注册然后登录就ok哈。</p>
+</blockquote>
+<p><img src="/2018/12/11/Windows-Github搭建个Hexo博客网站-2/Github_signup.png" alt="Github_Sign-up"></p>
+<ul>
+<li>登录进去后可以看到提示创建新的Repositories也就是我们的仓库，我们根据下图创建新的仓库</li>
+</ul>
+<p><img src="/2018/12/11/Windows-Github搭建个Hexo博客网站-2/GitHub_Create_Repository.png" alt="GitHub_Create_Repository"></p>
+<ul>
+<li>创建之后点进入创建的仓库可以看到下图（临时做了一个新的test仓库看效果），我们需要用到这里的ssh 链接。</li>
+</ul>
+<p><img src="/2018/12/11/Windows-Github搭建个Hexo博客网站-2/New_Repos.png" alt="New_Repos"></p>
+</li>
+<li><h2 id="GIt-Bash："><a href="#GIt-Bash：" class="headerlink" title="GIt Bash："></a>GIt Bash：</h2><ul>
+<li><p>我们在刚才创建了我们的GitHub账号以及仓库，那么现在回到我们的本地环境，还是选择我们的博客根目录（myblog），输入下面命令</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global user.name <span class="string">"username"</span>    <span class="comment"># username 为你的github账号名称</span></span><br><span class="line">$ git config --global user.email <span class="string">"useremail"</span>  <span class="comment"># useremail 为你注册的邮箱</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接下来呢我们给自己的本地环境创建一对密钥对</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C  <span class="string">"email"</span>  <span class="comment">#此处email 为你注册的邮箱</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>注册完成会在C/Users/zn/.ssh中如下图（这里的zn是我自己的用户名，没有用户名的应该是Administrator）或者我们可以使用一个非常好用的搜索软件<a href="https://www.voidtools.com/" target="_blank" rel="noopener">Everything</a>搜索文件名id_rsa.pub</p>
+<p><img src="/2018/12/11/Windows-Github搭建个Hexo博客网站-2/sshkey.png" alt="ssh_key"></p>
+</li>
+<li><p>这里我们要用到id_rsa.pub公钥文件，cat命令查看一下（Everything的朋友直接文件打开就行）复制公钥内容，在回到GItHub上，如下图</p>
+<ol>
+<li>点击GitHub右上角的个人头像</li>
+<li>点击settings</li>
+<li>找到并点击SSH  and GPG keys</li>
+<li>点击New SSH key，粘贴公钥</li>
+<li>提交</li>
+</ol>
+<p><img src="/2018/12/11/Windows-Github搭建个Hexo博客网站-2/Add_sshkey.png" alt="add_sshkey"></p>
+</li>
+<li><p>回到我们的Git Bash，输入下列命令,若有下图提示表示连接成功（opszn为我的用户名）。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2018/12/11/Windows-Github搭建个Hexo博客网站-2/test_connection.png" alt="test_connection"></p>
+</li>
+<li><p>配置本地根目录下_config.yml文件，找到Deployment并按照下图修改</p>
+<p><img src="/2018/12/11/Windows-Github搭建个Hexo博客网站-2/deploy.png" alt="deploy"></p>
+</li>
+<li><p>接下来托管我们的网站到GItHub，下面命令输入完会出现需要需要输入用户名密码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo d -g  # 生成静态页面上传至Github</span><br></pre></td></tr></table></figure>
+</li>
+<li></li>
+</ul>
+</li>
 </ul>
 
       
@@ -547,14 +562,18 @@ daovoice('update');
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2018/12/09/Windows-Github搭建个Hexo博客网站-1/" rel="next" title="Windows+Github搭建个Hexo博客网站-1">
+                <i class="fa fa-chevron-left"></i> Windows+Github搭建个Hexo博客网站-1
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/12/11/Windows-Github搭建个Hexo博客网站-2/" rel="prev" title="Windows+Github搭建个Hexo博客网站-2">
-                Windows+Github搭建个Hexo博客网站-2 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/07/09/Untitled/" rel="prev" title>
+                 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -746,7 +765,7 @@ daovoice('update');
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Windows-Github搭建个Hexo博客网站-1"><span class="nav-number">1.</span> <span class="nav-text">Windows+Github搭建个Hexo博客网站-1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.1.</span> <span class="nav-text">前言:</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本地环境："><span class="nav-number">1.2.</span> <span class="nav-text">本地环境：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#需要用到的软件："><span class="nav-number">1.3.</span> <span class="nav-text">需要用到的软件：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#至此，我们在本地的测试环境（或者说客户端环境就已经搭建完成），在下一篇文章中，我们将把我们的本地环境远程不熟到GIthub实现公网环境访问。"><span class="nav-number">1.4.</span> <span class="nav-text">至此，我们在本地的测试环境（或者说客户端环境就已经搭建完成），在下一篇文章中，我们将把我们的本地环境远程不熟到GIthub实现公网环境访问。</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Windows-Github搭建个Hexo博客网站-2"><span class="nav-number">1.</span> <span class="nav-text">Windows+Github搭建个Hexo博客网站-2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#前情回顾："><span class="nav-number">1.1.</span> <span class="nav-text">前情回顾：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本期概要："><span class="nav-number">1.2.</span> <span class="nav-text">本期概要：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GitHub："><span class="nav-number">1.3.</span> <span class="nav-text">GitHub：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GIt-Bash："><span class="nav-number">1.4.</span> <span class="nav-text">GIt Bash：</span></a></li></ol></li></ol></div>
             
 
           </div>
