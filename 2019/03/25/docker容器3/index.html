@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+  <script>(function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/ee194c93.js","daovoice")
+  daovoice('init', {
+  app_id: "ee194c93"
+});
+daovoice('update');
+  </script>
+  
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-bounce.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="docker,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="詹楠博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="docker容器3docker三剑客介绍为了把容器化技术的优点发挥得更好，docker公司先后推出了三大技术:  docker-machine docker-compose docker-swarm  使用”三剑客”可以帮助我们解决docker host维护,多容器编排部署,多个docker host集群的各个难题。 docker-machine通过之前的文章我们对于docker使用Linux内核">
+<meta name="keywords" content="docker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker容器3">
+<meta property="og:url" content="https://www.opszn.com/2019/03/25/docker容器3/index.html">
+<meta property="og:site_name" content="詹楠博客">
+<meta property="og:description" content="docker容器3docker三剑客介绍为了把容器化技术的优点发挥得更好，docker公司先后推出了三大技术:  docker-machine docker-compose docker-swarm  使用”三剑客”可以帮助我们解决docker host维护,多容器编排部署,多个docker host集群的各个难题。 docker-machine通过之前的文章我们对于docker使用Linux内核">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://www.opszn.com/2019/03/25/docker容器3/docker_machine.png">
+<meta property="og:image" content="https://www.opszn.com/2019/03/25/docker容器3/docker-machine-1.png">
+<meta property="og:updated_time" content="2019-08-16T09:27:10.185Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="docker容器3">
+<meta name="twitter:description" content="docker容器3docker三剑客介绍为了把容器化技术的优点发挥得更好，docker公司先后推出了三大技术:  docker-machine docker-compose docker-swarm  使用”三剑客”可以帮助我们解决docker host维护,多容器编排部署,多个docker host集群的各个难题。 docker-machine通过之前的文章我们对于docker使用Linux内核">
+<meta name="twitter:image" content="https://www.opszn.com/2019/03/25/docker容器3/docker_machine.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://www.opszn.com/2019/03/25/docker容器3/">
+
+
+
+
+
+  <title>docker容器3 | 詹楠博客</title>
+  
+
+
+
+
+
+
+
+
+  <style>
+  .fock{
+  display: none;
+  }
+  @media (min-width: 768px) {
+  .fock{
+  display: inline;
+  }
+  }
+  
+  </style>
+</head>
+<script type="text/javascript" src="/js/src/love.js"></script>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+ 
+  
+  
+    
+  
+  
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <div class="fock">
+	<a href="https://github.com/opszn/opszn.github.io" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#fff; color:#151513; position: absolute; top: 0; border: 0; left: 0; transform: scale(-1, 1);" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    </div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner">
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">詹楠博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">世间无限丹青手，一片伤心画不成。谁谓伤心画不成？画人心逐世人情。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home  //首页"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user  //关于"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags  //标签"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th  //分类"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive  //归档"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.opszn.com/2019/03/25/docker容器3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhan Nan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://s2.ax1x.com/2019/07/03/ZtLwdI.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="詹楠博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">docker容器3</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-25T15:53:07+08:00">
+                2019-03-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/容器/" itemprop="url" rel="index">
+                    <span itemprop="name">容器</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  16
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="docker容器3"><a href="#docker容器3" class="headerlink" title="docker容器3"></a>docker容器3</h1><h2 id="docker三剑客介绍"><a href="#docker三剑客介绍" class="headerlink" title="docker三剑客介绍"></a>docker三剑客介绍</h2><p>为了把容器化技术的优点发挥得更好，docker公司先后推出了三大技术:</p>
+<ul>
+<li>docker-machine</li>
+<li>docker-compose</li>
+<li>docker-swarm</li>
+</ul>
+<p>使用”三剑客”可以帮助我们解决docker host维护,多容器编排部署,多个docker host集群的各个难题。</p>
+<h3 id="docker-machine"><a href="#docker-machine" class="headerlink" title="docker-machine"></a>docker-machine</h3><p>通过之前的文章我们对于docker使用Linux内核技术（namespace，cgroup等），但是如果我们需要在Windows上或者mac上运行docker怎么去做呢？</p>
+<p>所以就需要用到docker-machine</p>
+<p><img src="/2019/03/25/docker容器3/docker_machine.png" alt></p>
+<p>docker-machine就是docker公司官方提出的,用于在各种平台上快速创建具有docker服务的虚拟机的技术.</p>
+<p>参考: <a href="https://docs.docker.com/machine/install-machine/#install-machine-directly" target="_blank" rel="noopener">https://docs.docker.com/machine/install-machine/#install-machine-directly</a></p>
+<p><img src="/2019/03/25/docker容器3/docker-machine-1.png" alt></p>
+<p>但是目前docker最主要的还是在Linux上运行，所以这个docker-machine的话涉及的还是比较少，只做了解即可。</p>
+<h3 id="docker-compose"><a href="#docker-compose" class="headerlink" title="docker-compose"></a>docker-compose</h3><h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>用容器运行一个服务,需要使用<code>docker run</code>命令。但如果我要运行多个服务呢?</p>
+<p>假设我要运行一个web服务,还要运行一个db服务,那么是用一个容器运行,还是用多个容器运行呢?</p>
+<p>一个容器运行多个服务会造成镜像的复杂度提高,<strong>docker倾向于一个容器运行一个应用</strong>。</p>
+<p>那么复杂的架构就会需要很多的容器,并且需要它们之间有关联(容器之间的依赖和连接)就更复杂了。</p>
+<p>这个复杂的问题需要解决,这就涉及到了<strong>容器编排</strong>的问题了。</p>
+<p>docker-compose就是可以做容器编排的小工具，它可以在一个文件中定义多个容器,只用一行命令就可以让一切就绪并运行。</p>
+<h4 id="使用docker-compose的三个步骤"><a href="#使用docker-compose的三个步骤" class="headerlink" title="使用docker-compose的三个步骤"></a>使用docker-compose的三个步骤</h4><p>docker-compose将所管理的容器分为了三层</p>
+<table>
+<thead>
+<tr>
+<th>project（工程）</th>
+<th>一个工程内包含多个服务，每个服务中定义了容器运行的镜像，参数等</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>service（服务）</td>
+<td>一个服务中可包括多个容器实例</td>
+</tr>
+<tr>
+<td>containerr（容器）</td>
+<td>一般一个容器运行一个应用</td>
+</tr>
+</tbody></table>
+<p>使用Compose基本上分为三步：</p>
+<ol>
+<li>Dockerfile 定义应用的运行环境（构建镜像)</li>
+<li>docker-compose.yml 定义组成应用的各服务</li>
+<li>docker-compose up 构建并启动整个应用</li>
+</ol>
+<h4 id="常见的语法"><a href="#常见的语法" class="headerlink" title="常见的语法"></a>常见的语法</h4><p>docker compose使用<code>.yml</code>或<code>.yaml</code>后缀来</p>
+<p>参考: <a href="https://docs.docker.com/compose/compose-file/" target="_blank" rel="noopener">https://docs.docker.com/compose/compose-file/</a></p>
+<h5 id="build"><a href="#build" class="headerlink" title="build"></a><strong>build</strong></h5><p>指定镜像构建时的dockerfile目录,格式一般为绝对路径目录或相对路径目录(dockerfile需要命名为Dockerfile)</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">build: /path/to/build/dir</span><br><span class="line">或者</span><br><span class="line">build: ./dir</span><br></pre></td></tr></table></figure>
+
+<h5 id="image"><a href="#image" class="headerlink" title="image"></a><strong>image</strong></h5><p>指定要启动容器的镜像</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">image: redis</span><br><span class="line">image: ubuntu:<span class="number">14.04</span></span><br><span class="line">image: tutum/influxdb</span><br><span class="line">image: example-registry.com:<span class="number">4000</span>/postgresql</span><br><span class="line">image: a4bc65fd</span><br></pre></td></tr></table></figure>
+
+<p>如果镜像不存在,compose尝试拉它.</p>
+<p>如果指定了构建, 可以使用指定的选项构建它,并使用指定的tag进行标记。</p>
+<h5 id="environment"><a href="#environment" class="headerlink" title="environment"></a><strong>environment</strong></h5><p>设置镜像变量，它可以保存变量到镜像里面，也就是说启动的容器也会包含这些变量设置</p>
+<p><code>environment</code> 和 Dockerfile 中的 <code>ENV</code> 指令一样会把变量一直保存在镜像,容器中</p>
+<p><strong>格式</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">environment:</span><br><span class="line">  RACK_ENV: development</span><br><span class="line">  SHOW: <span class="string">'true'</span></span><br><span class="line">或</span><br><span class="line">environment:</span><br><span class="line">  - RACK_ENV=development</span><br><span class="line">  - SHOW=true</span><br></pre></td></tr></table></figure>
+
+<h5 id="expose"><a href="#expose" class="headerlink" title="expose"></a><strong>expose</strong></h5><p>这个标签与Dockerfile中的 <code>EXPOSE</code> 指令一样，用于指定暴露的端口，但只将端口暴露给连接的服务，而不暴露给主机.</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">expose:</span><br><span class="line"> - <span class="string">"3000"</span></span><br><span class="line"> - <span class="string">"8000"</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="ports"><a href="#ports" class="headerlink" title="ports"></a><strong>ports</strong></h5><p>映射端口，可以使用 <code>HOST:CONTAINER</code> 的方式指定端口，也可以指定容器端口（选择临时主机端口），宿主机会随机映射端口</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">ports:</span><br><span class="line"> - <span class="string">"3000"</span></span><br><span class="line"> - <span class="string">"3000-3005"</span></span><br><span class="line"> - <span class="string">"8000:8000"</span></span><br><span class="line"> - <span class="string">"9090-9091:8080-8081"</span></span><br><span class="line"> - <span class="string">"49100:22"</span></span><br><span class="line"> - <span class="string">"127.0.0.1:8001:8001"</span></span><br><span class="line"> - <span class="string">"127.0.0.1:5000-5010:5000-5010"</span></span><br><span class="line"> - <span class="string">"6060:6060/udp"</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="restart"><a href="#restart" class="headerlink" title="restart"></a><strong>restart</strong></h5><p>指定Docker容器的重启策略</p>
+<p>默认值为 <code>no</code> ，即在任何情况下都不会重新启动容器</p>
+<p>当值为 <code>always</code> 时，容器退出时总是重新启动；</p>
+<p>当值为 <code>on-failure</code>时，当出现 <code>on-failure</code> 报错（非正常退出，退出状态非0）,才会重启容器</p>
+<p>当值为<code>unless-stopped</code>时, 在容器退出时总是重启容器，但是不考虑在Docker守护进程启动时就已经停止了的容器</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">restart: <span class="string">"no"</span></span><br><span class="line">restart: always</span><br><span class="line">restart: on-failure</span><br><span class="line">restart: on-failure:<span class="number">3</span></span><br><span class="line">restart: unless-stopped</span><br></pre></td></tr></table></figure>
+
+<h5 id="volume"><a href="#volume" class="headerlink" title="volume"></a><strong>volume</strong></h5><p>数据卷挂载，可以直接使用 <code>HOST:CONTAINER</code> 这样的格式</p>
+<p>或者使用 <code>HOST:CONTAINER:ro</code> 这样的格式，ro代表数据卷是只读的</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">volumes:</span><br><span class="line">  <span class="comment"># 只是指定一个路径，Docker 会自动在创建一个数据卷（这个路径是容器内部的）。</span></span><br><span class="line">  - /var/lib/mysql</span><br><span class="line"></span><br><span class="line">  <span class="comment"># 使用绝对路径挂载数据卷</span></span><br><span class="line">  - /opt/<span class="keyword">data</span>:/var/lib/mysql</span><br><span class="line"></span><br><span class="line">  <span class="comment"># 以Compose配置文件为中心的相对路径作为数据卷挂载到容器。</span></span><br><span class="line">  - ./cache:/tmp/cache</span><br><span class="line"></span><br><span class="line">  <span class="comment"># 使用用户的相对路径（~/ 表示的目录是 /home/&lt;用户目录&gt;/ 或者 /root/）。</span></span><br><span class="line">  - ~/configs:/etc/configs/:ro</span><br><span class="line"></span><br><span class="line">  <span class="comment"># 已经存在的命名的数据卷。</span></span><br><span class="line">  - datavolume:/var/lib/mysql</span><br></pre></td></tr></table></figure>
+
+<h5 id="depends-on"><a href="#depends-on" class="headerlink" title="depends_on"></a><strong>depends_on</strong></h5><p>此标签解决了容器的依赖、启动先后的问题</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">version: <span class="string">'3'</span></span><br><span class="line">services:</span><br><span class="line">  web:</span><br><span class="line">    build: .</span><br><span class="line">    depends_on:</span><br><span class="line">      - db</span><br><span class="line">      - redis</span><br><span class="line">  redis:</span><br><span class="line">    image: redis</span><br><span class="line">  db:</span><br><span class="line">    image: mysql</span><br></pre></td></tr></table></figure>
+
+<p>使用<code>docker-compose up web</code>启动,会先启动redis和db,再启动web</p>
+<h5 id="links"><a href="#links" class="headerlink" title="links"></a><strong>links</strong></h5><p>链接到其它服务的中的容器, 与<code>link</code>连接一样效果，会连接到其它服务中的容器</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">web:</span><br><span class="line">  links:</span><br><span class="line">   - db</span><br><span class="line">   - db:database</span><br><span class="line">   - redis</span><br></pre></td></tr></table></figure>
+
+<h4 id="案例：python计数应用"><a href="#案例：python计数应用" class="headerlink" title="案例：python计数应用"></a>案例：python计数应用</h4><p>同样的，为了更好的理解docker-compose的语法，我们创建一个基础的小应用来加深理解。</p>
+<p>创建一个Python应用， 使用Flask，将数值记入Redis</p>
+<p>1.建立工程目录并在工程目录里创建Python脚本</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">[root@opszn ~]<span class="comment"># mkdir -p /docker-compose/python_count</span></span><br><span class="line">[root@opszn ~]<span class="comment"># cd /docker-compose/python_count</span></span><br><span class="line">[root@opszn python_count]<span class="comment">#</span></span><br><span class="line"></span><br><span class="line">[root@opszn python_count]<span class="comment"># vim app.py</span></span><br><span class="line">from flask import Flask</span><br><span class="line">from redis import Redis</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line">redis = Redis(host=<span class="string">'redis'</span>, port=<span class="number">6379</span>)</span><br><span class="line"></span><br><span class="line">@app.route(<span class="string">'/'</span>)</span><br><span class="line">def hello():</span><br><span class="line">    redis.incr(<span class="string">'hits'</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">'Hello World! I have been seen %s times.'</span> % redis.get(<span class="string">'hits'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    app.run(host=<span class="string">"0.0.0.0"</span>, debug=True)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@opszn python_count]<span class="comment"># vim requirements.txt</span></span><br><span class="line">flask</span><br><span class="line">redis</span><br></pre></td></tr></table></figure>
+
+<p>2.创建 Dockerfile<br>在同一目录下，创建Dockerfile</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@opszn python_count]<span class="comment"># vim Dockerfile</span></span><br><span class="line">FROM python:<span class="number">2.7</span></span><br><span class="line">ADD . /code</span><br><span class="line">WORKDIR /code</span><br><span class="line">RUN pip install -r requirements.txt</span><br><span class="line">CMD python app.py</span><br></pre></td></tr></table></figure>
+
+<p>说明: </p>
+<ul>
+<li>容器使用Python 2.7的镜像</li>
+<li>将当前目录下文件拷贝到容器内/code</li>
+<li>指定工作目录为/code</li>
+<li>安装python需要的库：flask, redis,flask默认为5000端口</li>
+<li>容器执行命令 :python app.py</li>
+</ul>
+<p>3.创建编排脚本<br>在同一目录下，创建 docker-compose.yml</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@opszn python_count]# vim docker-compose.yml</span><br><span class="line">version: '3'</span><br><span class="line">services:</span><br><span class="line">  web:</span><br><span class="line">    build: .</span><br><span class="line">    ports:</span><br><span class="line">     - "5000:5000"</span><br><span class="line">    volumes:</span><br><span class="line">     - .:/code</span><br><span class="line">    depends_on:</span><br><span class="line">     - redis</span><br><span class="line">  redis:</span><br><span class="line">    image: redis:latest</span><br></pre></td></tr></table></figure>
+
+<p>说明:</p>
+<ul>
+<li>这个应用定义了两个服务：web, redis</li>
+<li>web容器通过当前路径下的Dockerfile生成</li>
+<li>web容器内的5000端口映射到docker宿主机的5000端口</li>
+<li>将当前目录挂载到web容器内/code</li>
+<li>web容器依赖于redis容器</li>
+<li>redis容器使用redis:latest镜像启动</li>
+</ul>
+<p>4, 启动应用<br>执行编排脚本，分别制作和拉取web，redis镜像，启动容器</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@opszn python_count]<span class="comment"># docker-compose up -d</span></span><br></pre></td></tr></table></figure>
+
+<p>5, 访问http://<code>docker宿主机IP</code>:5000，验证计数功能</p>
+<h3 id="docker-swarm"><a href="#docker-swarm" class="headerlink" title="docker-swarm"></a>docker-swarm</h3><h4 id="介绍-1"><a href="#介绍-1" class="headerlink" title="介绍"></a>介绍</h4><p>Docker Swarm是Docker官方提供的一款集群管理工具，其主要作用是把若干台Docker主机抽象为一个整体，并且通过一个入口统一管理这些Docker主机上的各种Docker资源。Swarm和Kubernetes比较类似，但是更加轻，具有的功能也较kubernetes更少一些。</p>
+<ul>
+<li>是docker host集群管理工具</li>
+<li>docker官方提供的</li>
+<li>docker 1.12版本以后</li>
+<li>用来统一集群管理的，把整个集群资源做统一调度</li>
+<li>比kubernetes要轻量化</li>
+<li>实现scaling 规模扩大或缩小</li>
+<li>实现rolling update 滚动更新或版本回退</li>
+<li>实现service discovery 服务发现</li>
+<li>实现load balance 负载均衡</li>
+<li>实现route mesh 路由网格，服务治理</li>
+</ul>
+<h4 id="概念与架构"><a href="#概念与架构" class="headerlink" title="概念与架构"></a>概念与架构</h4><p><strong>节点 (node):</strong> 就是一台docker host上面运行了docker engine.节点分为两类:</p>
+<ul>
+<li>管理节点(manager node) 负责管理集群中的节点并向工作节点分配任务</li>
+<li>工作节点(worker node) 接收管理节点分配的任务，运行任务</li>
+</ul>
+<p><strong>服务(services):</strong> 在工作节点运行的，由多个任务共同组成</p>
+<p><strong>任务(task):</strong> 运行在工作节点上容器或容器中包含应用，是集群中调度最小管理单元</p>
+<p>![](docker容器3/docker swarm架构图.png)</p>
+<h4 id="集群基础应用"><a href="#集群基础应用" class="headerlink" title="集群基础应用"></a>集群基础应用</h4><h5 id="镜像准备"><a href="#镜像准备" class="headerlink" title="镜像准备"></a>镜像准备</h5><p>我们可以构建两个不同的nginx版本推送到仓库中。</p>
+<h5 id="发布服务"><a href="#发布服务" class="headerlink" title="发布服务"></a>发布服务</h5><p>在docker swarm中,对外暴露的是服务（service)，而不是容器。</p>
+<p>为了保持高可用架构，它准许同时启动多个容器共同支撑一个服务，如果一个容器挂了，它会自动使用另一个容器</p>
+<p>在管理节点（manager node）上操作</p>
+<p>1.使用<code>docker service ls</code>查看没有任何服务</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 ~]<span class="comment"># docker service ls</span></span><br><span class="line">ID       NAME         MODE        REPLICAS       IMAGE         PORTS</span><br></pre></td></tr></table></figure>
+
+<p>2.发布服务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 ~]# docker service create --replicas 2 --publish 80:80 --name nginx_service 192.168.122.18/library/nginx:v1</span><br><span class="line">6q00dbum7f92wjnrjtnsab225</span><br><span class="line">overall progress: 2 out of 2 tasks</span><br><span class="line">1/2: running   [==================================================&gt;]</span><br><span class="line">2/2: running   [==================================================&gt;]</span><br><span class="line">verify: Service converged</span><br></pre></td></tr></table></figure>
+
+<p>说明:</p>
+<ul>
+<li>创建一个服务,名为nginx_service</li>
+<li>replicas 2指定2个副本(实现高可用，因为副本期望值)</li>
+<li>–publish 80:80  将服务内部的80端口发布到外部网络(在这里就是192.168.122.0/24网络)的80端口</li>
+<li>使用的镜像为<code>192.168.122.18/library/nginx:v1</code></li>
+</ul>
+<p>3.再次使用<code>docker service ls</code>查看就有服务了</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 ~]<span class="comment"># docker service ls</span></span><br><span class="line">ID                  NAME                MODE                REPLICAS            IMAGE                             PORTS</span><br><span class="line"><span class="number">6</span>q00dbum7f92        nginx_service       replicated          <span class="number">2</span>/<span class="number">2</span>                 <span class="number">192.168</span>.<span class="number">122.18</span>/library/nginx:v1   *:<span class="number">80</span>-&gt;<span class="number">80</span>/tcp</span><br></pre></td></tr></table></figure>
+
+<p>4.查看服务运行在哪些节点</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 ~]<span class="comment"># docker service ps nginx_service</span></span><br><span class="line">ID                  NAME                IMAGE                             NODE                DESIRED STATE       CURRENT STATE           ERROR               PORTS</span><br><span class="line">xxoqft3vp6zm        nginx_service.<span class="number">1</span>     <span class="number">192.168</span>.<span class="number">122.18</span>/library/nginx:v1   vm2.cluster.com     Running             Running <span class="number">3</span> minutes ago</span><br><span class="line">fycl30fuvp9i        nginx_service.<span class="number">2</span>     <span class="number">192.168</span>.<span class="number">122.18</span>/library/nginx:v1   vm1.cluster.com     Running             Running <span class="number">4</span> minutes ago</span><br><span class="line"></span><br><span class="line">可以看到在vm1和vm2节点,可以在vm1和vm2上使用docker ps -a验证</span><br></pre></td></tr></table></figure>
+
+<h5 id="路由网格"><a href="#路由网格" class="headerlink" title="路由网格"></a>路由网格</h5><p><code>route mesh</code></p>
+<p>假设集群中三个节点，master，node1，node2.我们的容器只运行在了master和node2，但是我们访问node3 的页面也可以成功， 这就是因为路由网格。</p>
+<p><strong>路由网格使得集群中每个节点都能够接收集群中已发布的服务端口的连接，即使节点上没有运行该任务。</strong></p>
+<h5 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h5><p>我们可以通过修改不同容器上的index.html文件内容，再有集群外的节点进行访问，可以发现其具有负载均衡，默认具体的负载均衡算法未知。</p>
+<h5 id="扩展服务"><a href="#扩展服务" class="headerlink" title="扩展服务"></a>扩展服务</h5><p>使用scale指定副本数来扩展(manage node上操作)</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 ~]<span class="comment"># docker service scale nginx_service=3</span></span><br><span class="line">nginx_service scaled to <span class="number">3</span></span><br><span class="line">overall progress: <span class="number">3</span> out of <span class="number">3</span> tasks</span><br><span class="line"><span class="number">1</span>/<span class="number">3</span>: running   [==================================================&gt;]</span><br><span class="line"><span class="number">2</span>/<span class="number">3</span>: running   [==================================================&gt;]</span><br><span class="line"><span class="number">3</span>/<span class="number">3</span>: running   [==================================================&gt;]</span><br><span class="line">verify: Service converged</span><br></pre></td></tr></table></figure>
+
+<p>验证</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 ~]<span class="comment"># docker service ps nginx_service</span></span><br><span class="line">ID                  NAME                IMAGE                             NODE                DESIRED STATE       CURRENT STATE            ERROR               PORTS</span><br><span class="line">xxoqft3vp6zm        nginx_service.<span class="number">1</span>     <span class="number">192.168</span>.<span class="number">122.18</span>/library/nginx:v1   vm2.cluster.com     Running             Running <span class="number">15</span> minutes ago</span><br><span class="line">fycl30fuvp9i        nginx_service.<span class="number">2</span>     <span class="number">192.168</span>.<span class="number">122.18</span>/library/nginx:v1   vm1.cluster.com     Running             Running <span class="number">16</span> minutes ago</span><br><span class="line"><span class="number">0</span>owxm8ykuxcj        nginx_service.<span class="number">3</span>     <span class="number">192.168</span>.<span class="number">122.18</span>/library/nginx:v1   vm3.cluster.com     Running             Running <span class="number">8</span> minutes ago</span><br><span class="line"></span><br><span class="line">可以看到<span class="number">3</span>个节点,使用docker ps -a去<span class="number">3</span>个节点上验证</span><br></pre></td></tr></table></figure>
+
+<h5 id="裁减服务"><a href="#裁减服务" class="headerlink" title="裁减服务"></a>裁减服务</h5><p>使用scale指定副本数来裁减(manage node上操作)</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 ~]<span class="comment"># docker service scale nginx_service=1</span></span><br><span class="line">nginx_service scaled to <span class="number">1</span></span><br><span class="line">overall progress: <span class="number">1</span> out of <span class="number">1</span> tasks</span><br><span class="line"><span class="number">1</span>/<span class="number">1</span>: running   [==================================================&gt;]</span><br><span class="line">verify: Service converged</span><br></pre></td></tr></table></figure>
+
+<p>验证</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 ~]<span class="comment"># docker service ps nginx_service</span></span><br><span class="line">ID                  NAME                IMAGE                             NODE                DESIRED STATE       CURRENT STATE            ERROR               PORTS</span><br><span class="line">xxoqft3vp6zm        nginx_service.<span class="number">1</span>     <span class="number">192.168</span>.<span class="number">122.18</span>/library/nginx:v1   vm2.cluster.com     Running             Running <span class="number">18</span> minutes ago</span><br><span class="line"></span><br><span class="line">只有vm2上跑有相关容器了</span><br></pre></td></tr></table></figure>
+
+<h5 id="版本更新或版本回退"><a href="#版本更新或版本回退" class="headerlink" title="版本更新或版本回退"></a>版本更新或版本回退</h5><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 ~]<span class="comment"># docker service update --image 192.168.122.18/library/nginx:v2 nginx_service</span></span><br><span class="line">nginx_service</span><br><span class="line">overall progress: <span class="number">1</span> out of <span class="number">1</span> tasks</span><br><span class="line"><span class="number">1</span>/<span class="number">1</span>: running   [==================================================&gt;]</span><br><span class="line">verify: Service converged</span><br></pre></td></tr></table></figure>
+
+<p>说明:</p>
+<ul>
+<li>update代表更新，rollback代表回退</li>
+<li>–image指定要更新的镜像</li>
+<li>nginx_service为指定要更新的服务名称</li>
+</ul>
+<h5 id="滚动间隔更新"><a href="#滚动间隔更新" class="headerlink" title="滚动间隔更新"></a>滚动间隔更新</h5><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 ~]<span class="comment"># docker service update --replicas 3 --image 192.168.122.18/library/nginx:v2 --update-parallelism 1 --update-delay 30s nginx_service</span></span><br></pre></td></tr></table></figure>
+
+<p>说明:</p>
+<ul>
+<li>–update-parallelism 1指定并行更新数量</li>
+<li>–update-delay 30s指定更新间隔时间</li>
+</ul>
+<p><strong>注意:</strong> docker swarm滚动更新会造成节点上有exit状态的容器,可以考虑清除</p>
+<h5 id="服务删除"><a href="#服务删除" class="headerlink" title="服务删除"></a>服务删除</h5><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 ~]<span class="comment"># docker service rm nginx_service</span></span><br><span class="line">nginx_service</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 ~]<span class="comment"># docker service ls</span></span><br><span class="line">ID       NAME        MODE         REPLICAS       IMAGE       PORTS</span><br></pre></td></tr></table></figure>
+
+<h5 id="本地存储卷"><a href="#本地存储卷" class="headerlink" title="本地存储卷"></a>本地存储卷</h5><p>用于持久化数据</p>
+<p>思路：</p>
+<p>1.集群内节点都需要创建需要挂载的数据目录</p>
+<p>2.发布服务，将其挂载至需要的位置</p>
+<p>问题：</p>
+<p>上述的思路中，我们是利用本地挂载得到方式实现数据持久化。但如果集群节点较多，那么每次部署就显得非常麻烦，而且各个节点的数据一不一致，不符合实际的业务需求。</p>
+<p>解决的思路：我们可以通过nfs，ceph等远程存储将其挂载至容器需求的位置。</p>
+<h5 id="网络存储卷"><a href="#网络存储卷" class="headerlink" title="网络存储卷"></a>网络存储卷</h5><ul>
+<li>网络存储卷可以实现跨docker宿主机的数据共享,数据持久保存到网络存储卷中</li>
+<li>在创建service时添加卷的挂载参数,网络存储卷可以帮助自动挂载(<strong>但需要集群节点都创建该网络存储卷</strong>)</li>
+</ul>
+<p>思路（nfs）：</p>
+<p>1.所有节点安装nfs客户端。</p>
+<p>2.在远程搭建nfs服务。</p>
+<p>3.docker-swarm集群中创建存储卷。</p>
+<p>4.管理节点发布服务，使用3 中创建的存储卷。</p>
+<p>5.修改远程挂载目录内容， 在集群中验证数据一致性。</p>
+<h5 id="服务互联与服务发现"><a href="#服务互联与服务发现" class="headerlink" title="服务互联与服务发现"></a>服务互联与服务发现</h5><p>如果一个nginx服务与一个mysql服务之间需要连接,在docker swarm如何实现呢?</p>
+<p><strong>方法1:</strong></p>
+<p>把mysql服务也使用 <code>--publish</code>参数发布到外网,但这样做的缺点是:mysql这种服务发布到外网不安全</p>
+<p><strong>方法2:</strong></p>
+<p>将mysql服务等运行在内部网络,只需要nginx服务能够连接mysql就可以了,在docker swarm中可以使用<strong>overlay</strong>网络来实现(overlay就类似在openstack里使用vxlan实现的自助网络)</p>
+<p>但现在还有个问题,服务副本数发生变化时,容器内部的IP发生变化时,我们希望仍然能够访问到这个服务, 这就是<strong>服务发现（service discovery)</strong>.</p>
+<p><strong>通过服务发现, service的使用者都不需要知道service运行在哪里,IP是多少,有多少个副本,就能让service通信</strong></p>
+<p>下面使用<code>docker network ls</code>查看到的ingress网络就是一个overlay类型的网络,但它不支持服务发现</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 ~]<span class="comment"># docker network ls</span></span><br><span class="line">NETWORK ID          NAME                DRIVER              SCOPE</span><br><span class="line">f1cd139a3cab        bridge              bridge              local</span><br><span class="line">d65ee76360c1        docker_gwbridge     bridge              local</span><br><span class="line"><span class="number">9</span>cc272e76614        host                host                local</span><br><span class="line"><span class="number">1</span>mgiyesumvf6        ingress             overlay             swarm</span><br><span class="line"><span class="number">4824</span>db275540        none                null                local</span><br></pre></td></tr></table></figure>
+
+<p>我们<strong>需要自建一个overlay网络来实现服务发现, 需要相互通信的service也必须属于同一个overlay网络</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 ~]<span class="comment"># docker network create --driver overlay --subnet 192.168.100.0/24 self-network</span></span><br></pre></td></tr></table></figure>
+
+<p>说明:</p>
+<ul>
+<li>–driver overlay指定为overlay类型</li>
+<li>–subnet 分配网段</li>
+<li>self-network  为自定义的网络名称</li>
+</ul>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 ~]<span class="comment"># docker network ls</span></span><br><span class="line">NETWORK ID          NAME                DRIVER              SCOPE</span><br><span class="line">f1cd139a3cab        bridge              bridge              local</span><br><span class="line">d65ee76360c1        docker_gwbridge     bridge              local</span><br><span class="line"><span class="number">9</span>cc272e76614        host                host                local</span><br><span class="line"><span class="number">1</span>mgiyesumvf6        ingress             overlay             swarm</span><br><span class="line"><span class="number">4824</span>db275540        none                null                local</span><br><span class="line">d9l9885takmm        self-network        overlay             swarm</span><br></pre></td></tr></table></figure>
+
+<p>我们需要在创建服务的时候将网络类型指定为上面我们创建的网络。</p>
+<p><strong>结论: 在自建的overlay网络内,通过服务发现可以实现服务之间通过服务名(不用知道对方的IP)互联,而且不会受服务内副本个数和容器内IP变化等的影响。</strong></p>
+<h3 id="docker-stack"><a href="#docker-stack" class="headerlink" title="docker-stack"></a>docker-stack</h3><h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>早期使用service发布，每次只能发布一个service。</p>
+<p>yaml可以发布多个服务，但是使用docker-compose只能在一台主机发布。</p>
+<p>一个stack就是一组有关联的服务的组合，可以一起编排，一起发布, 一起管理</p>
+<ul>
+<li>docker stack deploy       部署新的堆栈或更新现有堆栈</li>
+<li>docker stack ls                列出现有堆栈</li>
+<li>docker stack ps              列出堆栈中的任务</li>
+<li>docker stack rm             删除一个或多个堆栈</li>
+<li>docker stack services    列出堆栈中的服务</li>
+</ul>
+<h4 id="案例实现：wordpress"><a href="#案例实现：wordpress" class="headerlink" title="案例实现：wordpress"></a>案例实现：wordpress</h4><ul>
+<li><p>编写yaml文件</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 ~]<span class="comment"># vim stack1.yml</span></span><br><span class="line">version: <span class="string">'3'</span></span><br><span class="line">services:</span><br><span class="line">  db:</span><br><span class="line">    image: mysql:<span class="number">5.7</span></span><br><span class="line">    environment:</span><br><span class="line">      MYSQL_ROOT_PASSWORD: wordpress</span><br><span class="line">      MYSQL_DATABASE: wordpress</span><br><span class="line">      MYSQL_USER: wordpress</span><br><span class="line">      MYSQL_PASSWORD: wordpress</span><br><span class="line">    deploy:</span><br><span class="line">      replicas: <span class="number">1</span></span><br><span class="line"></span><br><span class="line">  wordpress:</span><br><span class="line">    depends_on:</span><br><span class="line">      - db</span><br><span class="line">    image: wordpress:latest</span><br><span class="line">    ports:</span><br><span class="line">      - <span class="string">"8010:80"</span></span><br><span class="line">    environment:</span><br><span class="line">      WORDPRESS_DB_HOST: db:<span class="number">3306</span></span><br><span class="line">      WORDPRESS_DB_PASSWORD: wordpress</span><br><span class="line">    deploy:</span><br><span class="line">      replicas: <span class="number">1</span></span><br><span class="line">      placement:</span><br><span class="line">        constraints: [node.role == manager]</span><br></pre></td></tr></table></figure>
+
+<p>说明：placement的constraints限制此容器在manager节点</p>
+</li>
+<li><p>使用docker stack 发布</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@vm1 ~]<span class="comment"># docker stack deploy -c stack1.yml stack1</span></span><br><span class="line">Creating network stack1_default						创建自建的overlay网络</span><br><span class="line">Creating service stack1_db							创建stack1_db服务</span><br><span class="line">Creating service stack1_wordpress					创建stack1_wordpress服务</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在浏览器使用管理节点IP进行访问</p>
+</li>
+</ul>
+<h4 id="报错"><a href="#报错" class="headerlink" title="报错"></a>报错</h4><p>万一在stack 发布的时候出现错误，我们要对已经构建的stack1进行删除，而后在排查问题，重新发布。</p>
+
+      
+    </div>
+    
+    
+    
+    <div>
+         
+         <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-angellist"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+         
+    </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/docker/" rel="tag"><i class="fa fa-tag"></i> docker</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/22/docker容器2/" rel="next" title="docker容器2">
+                <i class="fa fa-chevron-left"></i> docker容器2
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80NTE0MS8yMTY1OA=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://s2.ax1x.com/2019/07/03/ZtLwdI.png" alt="Zhan Nan">
+            
+              <p class="site-author-name" itemprop="name">Zhan Nan</p>
+              <p class="site-description motion-element" itemprop="description">本站意在分享个人一些工作以及生活经验</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/opszn" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:mail@opszn.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope-square"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#docker容器3"><span class="nav-number">1.</span> <span class="nav-text">docker容器3</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#docker三剑客介绍"><span class="nav-number">1.1.</span> <span class="nav-text">docker三剑客介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-machine"><span class="nav-number">1.1.1.</span> <span class="nav-text">docker-machine</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-compose"><span class="nav-number">1.1.2.</span> <span class="nav-text">docker-compose</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#介绍"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用docker-compose的三个步骤"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">使用docker-compose的三个步骤</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常见的语法"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">常见的语法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#build"><span class="nav-number">1.1.2.3.1.</span> <span class="nav-text">build</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#image"><span class="nav-number">1.1.2.3.2.</span> <span class="nav-text">image</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#environment"><span class="nav-number">1.1.2.3.3.</span> <span class="nav-text">environment</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#expose"><span class="nav-number">1.1.2.3.4.</span> <span class="nav-text">expose</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ports"><span class="nav-number">1.1.2.3.5.</span> <span class="nav-text">ports</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#restart"><span class="nav-number">1.1.2.3.6.</span> <span class="nav-text">restart</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#volume"><span class="nav-number">1.1.2.3.7.</span> <span class="nav-text">volume</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#depends-on"><span class="nav-number">1.1.2.3.8.</span> <span class="nav-text">depends_on</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#links"><span class="nav-number">1.1.2.3.9.</span> <span class="nav-text">links</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#案例：python计数应用"><span class="nav-number">1.1.2.4.</span> <span class="nav-text">案例：python计数应用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-swarm"><span class="nav-number">1.1.3.</span> <span class="nav-text">docker-swarm</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#介绍-1"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#概念与架构"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">概念与架构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#集群基础应用"><span class="nav-number">1.1.3.3.</span> <span class="nav-text">集群基础应用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#镜像准备"><span class="nav-number">1.1.3.3.1.</span> <span class="nav-text">镜像准备</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#发布服务"><span class="nav-number">1.1.3.3.2.</span> <span class="nav-text">发布服务</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#路由网格"><span class="nav-number">1.1.3.3.3.</span> <span class="nav-text">路由网格</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#负载均衡"><span class="nav-number">1.1.3.3.4.</span> <span class="nav-text">负载均衡</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#扩展服务"><span class="nav-number">1.1.3.3.5.</span> <span class="nav-text">扩展服务</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#裁减服务"><span class="nav-number">1.1.3.3.6.</span> <span class="nav-text">裁减服务</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#版本更新或版本回退"><span class="nav-number">1.1.3.3.7.</span> <span class="nav-text">版本更新或版本回退</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#滚动间隔更新"><span class="nav-number">1.1.3.3.8.</span> <span class="nav-text">滚动间隔更新</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#服务删除"><span class="nav-number">1.1.3.3.9.</span> <span class="nav-text">服务删除</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#本地存储卷"><span class="nav-number">1.1.3.3.10.</span> <span class="nav-text">本地存储卷</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#网络存储卷"><span class="nav-number">1.1.3.3.11.</span> <span class="nav-text">网络存储卷</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#服务互联与服务发现"><span class="nav-number">1.1.3.3.12.</span> <span class="nav-text">服务互联与服务发现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-stack"><span class="nav-number">1.1.4.</span> <span class="nav-text">docker-stack</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简介"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#案例实现：wordpress"><span class="nav-number">1.1.4.2.</span> <span class="nav-text">案例实现：wordpress</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#报错"><span class="nav-number">1.1.4.3.</span> <span class="nav-text">报错</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-github-alt" aria-hidden="true"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhan Nan</span>
+    <div class="powered-by">
+    <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span> |</span>
+    </div>
+
+ <div class="theme-info">
+      <span class="post-count">本站共计36.3k字</span>
+  </div>
+  
+</div>
+
+<!--
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+-->
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"left","width":100,"height":170},"mobile":{"show":false},"log":false});</script></body>
+</html>

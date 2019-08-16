@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+  <script>(function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/ee194c93.js","daovoice")
+  daovoice('init', {
+  app_id: "ee194c93"
+});
+daovoice('update');
+  </script>
+  
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-bounce.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="CI/CD,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="詹楠博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="Git+Gitlab+Jenkins_2(Gitlab)Gitlab与GitHub两者之间功能类似，前者主要用于内网环境，后者在公网环境。 一般公司业务考虑到其代码安全问题，会部署内网环境的Gitlab。 gitlab下载https://mirrors.tuna.tsinghua.edu.cn推荐使用清华源进行下载，本次环境选用的是社区版。 安装以及配置 由于我们自己去公网环境下载的软件包，安装就">
+<meta name="keywords" content="CI&#x2F;CD">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git+Gitlab+Jenkins_2">
+<meta property="og:url" content="https://www.opszn.com/2019/02/22/Git-Gitlab-Jenkins-2/index.html">
+<meta property="og:site_name" content="詹楠博客">
+<meta property="og:description" content="Git+Gitlab+Jenkins_2(Gitlab)Gitlab与GitHub两者之间功能类似，前者主要用于内网环境，后者在公网环境。 一般公司业务考虑到其代码安全问题，会部署内网环境的Gitlab。 gitlab下载https://mirrors.tuna.tsinghua.edu.cn推荐使用清华源进行下载，本次环境选用的是社区版。 安装以及配置 由于我们自己去公网环境下载的软件包，安装就">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://www.opszn.com/2019/02/22/Git-Gitlab-Jenkins-2/1.png">
+<meta property="og:image" content="https://www.opszn.com/2019/02/22/Git-Gitlab-Jenkins-2/2.png">
+<meta property="og:image" content="https://www.opszn.com/2019/02/22/Git-Gitlab-Jenkins-2/3.png">
+<meta property="og:image" content="https://www.opszn.com/2019/02/22/Git-Gitlab-Jenkins-2/%E6%BB%9A%E5%8A%A8%E6%9B%B4%E6%96%B0-1.jpg">
+<meta property="og:image" content="https://www.opszn.com/2019/02/22/Git-Gitlab-Jenkins-2/%E6%BB%9A%E5%8A%A8%E6%9B%B4%E6%96%B0-2.jpg">
+<meta property="og:image" content="https://www.opszn.com/2019/02/22/Git-Gitlab-Jenkins-2/%E6%BB%9A%E5%8A%A8%E6%9B%B4%E6%96%B0-3.jpg">
+<meta property="og:image" content="https://www.opszn.com/2019/02/22/Git-Gitlab-Jenkins-2/%E6%BB%9A%E5%8A%A8%E6%9B%B4%E6%96%B0-4.jpg">
+<meta property="og:image" content="https://www.opszn.com/2019/02/22/Git-Gitlab-Jenkins-2/%E9%87%91%E4%B8%9D%E9%9B%80%E9%83%A8%E7%BD%B2.png">
+<meta property="og:updated_time" content="2019-08-14T08:54:52.612Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Git+Gitlab+Jenkins_2">
+<meta name="twitter:description" content="Git+Gitlab+Jenkins_2(Gitlab)Gitlab与GitHub两者之间功能类似，前者主要用于内网环境，后者在公网环境。 一般公司业务考虑到其代码安全问题，会部署内网环境的Gitlab。 gitlab下载https://mirrors.tuna.tsinghua.edu.cn推荐使用清华源进行下载，本次环境选用的是社区版。 安装以及配置 由于我们自己去公网环境下载的软件包，安装就">
+<meta name="twitter:image" content="https://www.opszn.com/2019/02/22/Git-Gitlab-Jenkins-2/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://www.opszn.com/2019/02/22/Git-Gitlab-Jenkins-2/">
+
+
+
+
+
+  <title>Git+Gitlab+Jenkins_2 | 詹楠博客</title>
+  
+
+
+
+
+
+
+
+
+  <style>
+  .fock{
+  display: none;
+  }
+  @media (min-width: 768px) {
+  .fock{
+  display: inline;
+  }
+  }
+  
+  </style>
+</head>
+<script type="text/javascript" src="/js/src/love.js"></script>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+ 
+  
+  
+    
+  
+  
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <div class="fock">
+	<a href="https://github.com/opszn/opszn.github.io" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#fff; color:#151513; position: absolute; top: 0; border: 0; left: 0; transform: scale(-1, 1);" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    </div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner">
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">詹楠博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">世间无限丹青手，一片伤心画不成。谁谓伤心画不成？画人心逐世人情。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home  //首页"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user  //关于"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags  //标签"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th  //分类"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive  //归档"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.opszn.com/2019/02/22/Git-Gitlab-Jenkins-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhan Nan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://s2.ax1x.com/2019/07/03/ZtLwdI.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="詹楠博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Git+Gitlab+Jenkins_2</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-22T16:06:06+08:00">
+                2019-02-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Gitlab/" itemprop="url" rel="index">
+                    <span itemprop="name">Gitlab</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  8
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Git-Gitlab-Jenkins-2-Gitlab"><a href="#Git-Gitlab-Jenkins-2-Gitlab" class="headerlink" title="Git+Gitlab+Jenkins_2(Gitlab)"></a>Git+Gitlab+Jenkins_2(Gitlab)</h1><h2 id="Gitlab与GitHub"><a href="#Gitlab与GitHub" class="headerlink" title="Gitlab与GitHub"></a>Gitlab与GitHub</h2><p>两者之间功能类似，前者主要用于内网环境，后者在公网环境。</p>
+<p>一般公司业务考虑到其代码安全问题，会部署内网环境的Gitlab。</p>
+<h2 id="gitlab下载"><a href="#gitlab下载" class="headerlink" title="gitlab下载"></a>gitlab下载</h2><p><a href="https://mirrors.tuna.tsinghua.edu.cn推荐使用清华源进行下载，本次环境选用的是社区版。" target="_blank" rel="noopener">https://mirrors.tuna.tsinghua.edu.cn推荐使用清华源进行下载，本次环境选用的是社区版。</a></p>
+<p><strong>安装以及配置</strong></p>
+<p>由于我们自己去公网环境下载的软件包，安装就简单的用yum安装即可（rpm也可以，但是yum安装rpm包时会自动安装其依赖，当然这个环境没有依赖，个人习惯）。</p>
+<p>接下来修改配置</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@gitlab ~]<span class="comment"># vim /etc/gitlab/gitlab.rb</span></span><br><span class="line">external_url <span class="string">'http://1.1.1.10'</span>	  将ip改为gitlab服务器的ip，方便内网进行访问</span><br></pre></td></tr></table></figure>
+
+<p><strong>初始化</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@gitlab ~]<span class="comment"># gitlab-ctl reconfigure</span></span><br><span class="line">[root@gitlab ~]<span class="comment"># gitlab-ctl status</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="gitlab登录"><a href="#gitlab登录" class="headerlink" title="gitlab登录"></a>gitlab登录</h2><p>我们哦通过浏览器访问gitlab服务器ip，首次登录我们需要设置密码。</p>
+<p>设置邮箱的用途：<br>1.账号注册时，邮件验证</p>
+<p>2.有合并请求时，邮件通知</p>
+<p>3.修改密码时，通过邮件修改</p>
+<h2 id="开发者设置ssh密钥粘贴至gitlab"><a href="#开发者设置ssh密钥粘贴至gitlab" class="headerlink" title="开发者设置ssh密钥粘贴至gitlab"></a>开发者设置ssh密钥粘贴至gitlab</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">产生密钥对</span><br><span class="line">ssh-keygen</span><br><span class="line">查看公钥</span><br><span class="line">cat /root/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
+
+<p>之后回到浏览器进入设置，将公钥粘贴至gitlab中</p>
+<h2 id="创建仓库"><a href="#创建仓库" class="headerlink" title="创建仓库"></a>创建仓库</h2><p>gitlab创建仓库同github，图形化的创建，这里略过。</p>
+<h2 id="克隆远程仓库到本地"><a href="#克隆远程仓库到本地" class="headerlink" title="克隆远程仓库到本地"></a>克隆远程仓库到本地</h2><h3 id="在开发者电脑上配置身份标识"><a href="#在开发者电脑上配置身份标识" class="headerlink" title="在开发者电脑上配置身份标识"></a>在开发者电脑上配置身份标识</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@opszn ~]<span class="comment"># git config --global user.name "opszn"</span></span><br><span class="line">[root@opszn ~]<span class="comment"># git config --global user.email "mail@opszn.com"</span></span><br><span class="line">[root@opszn ~]<span class="comment"># git clone git@1.1.1.10:root/mywebsite.git</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="在开发者电脑上进行克隆并上传"><a href="#在开发者电脑上进行克隆并上传" class="headerlink" title="在开发者电脑上进行克隆并上传"></a>在开发者电脑上进行克隆并上传</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@opszn ~]<span class="comment"># cd mywebsite/</span></span><br><span class="line"></span><br><span class="line">[root@opszn mywebsite]<span class="comment"># echo "test web" &gt; README.md</span></span><br><span class="line">[root@opszn mywebsite]<span class="comment"># git add .</span></span><br><span class="line">[root@opszn mywebsite]<span class="comment"># git commit -m "add README.md"</span></span><br><span class="line"></span><br><span class="line">[root@opszn mywebsite]<span class="comment"># git push -u origin master</span></span><br></pre></td></tr></table></figure>
+
+<p>上传完成后我们就可以在浏览器端看到仓库中有了新的文件</p>
+<p><strong>小结</strong></p>
+<p>git  分布式版本控制工具</p>
+<p>github和gitlab都属于远程仓库</p>
+<p>git clone: 把远程仓库的项目代码下载到本地</p>
+<p>git push: 把本地的项目代码上传到远程仓库</p>
+<p>git pull:  把远程仓库的项目代码更新到本地</p>
+<p>远程仓库两种访问方法:</p>
+<ul>
+<li>http  </li>
+<li>ssh  使用空密码密钥做免密</li>
+</ul>
+<h2 id="持续集成（CI）"><a href="#持续集成（CI）" class="headerlink" title="持续集成（CI）"></a>持续集成（CI）</h2><p><strong>Continuous integration简称CI</strong></p>
+<p> 是一种软件开发实践，即团队开发成员经常集成他们的工作，通常每个成员每天至少集成一次，也就意味着每天可能会发生多次集成。每次集成都通过自动化的构建（包括编译，发布，自动化测试)来验证，从而尽快地发现集成错误。</p>
+<p><img src="/2019/02/22/Git-Gitlab-Jenkins-2/1.png" alt></p>
+<p><strong>目的</strong></p>
+<p>​        持续集成的目的不是减少build失败的次数，而是<strong>尽早发现问题，在最短的时间内解决问题</strong>，减少风险和浪费。从而让产品开发流程更加敏捷，缩短产品开发周期，在产品上线后，让用户用得更加顺畅。</p>
+<p>​        在没有应用持续集成之前，传统的开发模式是项目一开始就划分模块，每个开发人员分别负责一个模块，等所有的代码都开发完成之后再集成到一起提交给测试人员，随着软件技术团队的发展，软件已经不能简单地通过划分模块的方式来开发，需要项目内部相互协作，划分模块这种传统的模式的弊端也越来越明显。由于很多bug在项目早期的设计、编码阶段就引入，到最后集成测试时才发现问题，开发人员需要花费大量的时间来定位bug，加上软件的复杂性，bug的定位就更难了，甚至出现不得不调整底层架构的情况。这种情况的发生不仅仅对测试进度造成影响，而且会拖长整个项目周期。</p>
+<p>​       而持续集成可以有效解决软件开发过程中的许多问题，在集成测试阶段之前就帮助开发人员发现问题，从而可以有效的确保软件质量，减小项目的风险，使软件开发团队从容的面对各种变化。持续集成报告中可以体现目前项目进度，哪部分需要已经实现，哪些代码已经通过自动化测试，代码质量如何，让开发团队和项目组了解项目的真实状况。</p>
+<h2 id="持续交付（CD）"><a href="#持续交付（CD）" class="headerlink" title="持续交付（CD）"></a>持续交付（CD）</h2><p><strong>Continuous Delivery，简称CD</strong></p>
+<p> 持续交付是指软件开发过程，从原始需求到最终产品开发过程中，较短周期内以需求的小颗粒度（小批量）频繁提交的过程。主要指集成后的代码在类生产环境(测试环境,预发布环境等)中测试并及时反馈的过程。</p>
+<p><img src="/2019/02/22/Git-Gitlab-Jenkins-2/2.png" alt></p>
+<p><strong>目的</strong></p>
+<ol>
+<li>开发过程的快速迭代，小步快跑，及时纠正偏离主线</li>
+<li>小颗粒度实现，避免颗粒度大，出现问题解决麻烦</li>
+<li>迅速反馈软件功能，避免方向性错误</li>
+<li>团队角色（含客户）协作密切，减少时间浪费</li>
+</ol>
+<h2 id="持续部署（CD）"><a href="#持续部署（CD）" class="headerlink" title="持续部署（CD）"></a>持续部署（CD）</h2><p><strong>Continuous Deployment，简称CD</strong></p>
+<p>基于持续交付的基础上，把功能稳定，符合产品需求的版本有方法地部署至生产环境中。可以看作是持续交付的最后一环。</p>
+<p><img src="/2019/02/22/Git-Gitlab-Jenkins-2/3.png" alt></p>
+<h3 id="蓝绿部署"><a href="#蓝绿部署" class="headerlink" title="蓝绿部署"></a>蓝绿部署</h3><p>海豚分左脑右脑，活跃的时候都清醒；休息的时候一边清醒一边休眠，每两个小时切换一次。</p>
+<p>蓝绿部署也可将集群分为两个部分，没有版本修改时两边整个集群都处于活跃状态。当我们需要进行版本修改时，先停掉一半的业务进行版本修改，修改完成后进行上线，之后再停掉另外一半的业务进行修改。这样就实现了不停机更新。</p>
+<h3 id="滚动更新"><a href="#滚动更新" class="headerlink" title="滚动更新"></a>滚动更新</h3><p>滚动更新，英文Rolling update，同样是一种可以保证系统在不间断提供服务的情况下上线代码的部署方式。</p>
+<p>和蓝绿部署不同的是，滚动部署对外提供服务的版本并不是非此即彼，而是在更细的粒度下平滑完成版本的升级。</p>
+<p>如何做到细粒度平滑升级版本呢？</p>
+<p>滚动部署只需要一个集群，集群下的不同节点可以独立进行版本升级。比如在一个16节点的集群中，我们选择每次升级4个节点：</p>
+<p><img src="/2019/02/22/Git-Gitlab-Jenkins-2/%E6%BB%9A%E5%8A%A8%E6%9B%B4%E6%96%B0-1.jpg" alt></p>
+<p><img src="/2019/02/22/Git-Gitlab-Jenkins-2/%E6%BB%9A%E5%8A%A8%E6%9B%B4%E6%96%B0-2.jpg" alt></p>
+<p><img src="/2019/02/22/Git-Gitlab-Jenkins-2/%E6%BB%9A%E5%8A%A8%E6%9B%B4%E6%96%B0-3.jpg" alt></p>
+<p><img src="/2019/02/22/Git-Gitlab-Jenkins-2/%E6%BB%9A%E5%8A%A8%E6%9B%B4%E6%96%B0-4.jpg" alt></p>
+<p><strong>蓝绿部署与滚动更新对比</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">部署方式</th>
+<th align="center">优势</th>
+<th align="center">劣势</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">蓝绿部署</td>
+<td align="center">1.同时间对外服务的只有一个版本，容易定位问题。2.集群式部署，较为简单。</td>
+<td align="center">需维护两个集群，成本较高。</td>
+</tr>
+<tr>
+<td align="center">滚动更新</td>
+<td align="center">只需要维护一个版本，成本较低</td>
+<td align="center">1.两个版本同时服务，不容易定位问题。2.升级和回滚以节点为单位，较复杂。</td>
+</tr>
+</tbody></table>
+<h3 id="灰度发布（A-B测试、金丝雀部署）"><a href="#灰度发布（A-B测试、金丝雀部署）" class="headerlink" title="灰度发布（A/B测试、金丝雀部署）"></a>灰度发布（A/B测试、金丝雀部署）</h3><p>灰度发布是指在黑与白之间，能够平滑过渡的一种发布方式。</p>
+<p>AB test就是一种灰度发布方式，让一部分用户继续用A，一部分用户开始用B，如果用户对B没有什么反对意见，那么逐步扩大范围，把所有用户都迁移到B上面来。</p>
+<p>灰度发布可以保证整体系统的稳定，在初始灰度的时候就可以发现、调整问题，以保证其影响度，而我们平常所说的金丝雀部署也就是灰度发布的一种方式。</p>
+<p><img src="/2019/02/22/Git-Gitlab-Jenkins-2/%E9%87%91%E4%B8%9D%E9%9B%80%E9%83%A8%E7%BD%B2.png" alt></p>
+<p>灰度发布/金丝雀部署步骤：</p>
+<ol>
+<li>准备好部署各个阶段的工件，包括：构建工件，测试脚本，配置文件和部署清单文件。</li>
+<li>从负载均衡列表中移除掉“金丝雀”服务器。</li>
+<li>升级“金丝雀”应用（排掉原有流量并进行部署）。</li>
+<li>对应用进行自动化测试。</li>
+<li>将“金丝雀”服务器重新添加到负载均衡列表中（连通性和健康检查）。</li>
+<li>如果“金丝雀”在线使用测试成功，升级剩余的其他服务器。（否则就回滚）</li>
+</ol>
+<p>除此之外灰度发布还可以设置路由权重，动态调整不同的权重来进行新老版本的验证。</p>
+<h2 id="持续发布（CR）"><a href="#持续发布（CR）" class="headerlink" title="持续发布（CR）"></a>持续发布（CR）</h2><p><strong>Continuous Release，简称CR</strong></p>
+<p>​    发布是周期性或不定期地对项目在部署后，进行整体软件版本的更新，例如，更新新功能或展示页面框架等。</p>
+<p><strong>目的</strong></p>
+<ol>
+<li>产品的快速迭代，小步快跑</li>
+<li>适应市场变化</li>
+<li>匹配市场策略</li>
+<li>应对市场风险</li>
+</ol>
+<h2 id="持续测试（CT）"><a href="#持续测试（CT）" class="headerlink" title="持续测试（CT）"></a>持续测试（CT）</h2><p><strong>Continuous Testing,简称CT</strong></p>
+<p>​       持续测试是贯穿着整个软件开发过程，验证程序员提交代码，检验合规性及降低bug,减少最终错误，实现敏捷及精益开发。</p>
+<p><strong>目的</strong></p>
+<ol>
+<li>为了降低开发、部署、发布等可能出现的错误</li>
+<li>防止代码出错</li>
+<li>防止功能出错</li>
+<li>防止业务逻辑出错等</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+    <div>
+         
+         <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-angellist"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+         
+    </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CI-CD/" rel="tag"><i class="fa fa-tag"></i> CI/CD</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/19/Git-Gitlab-Jenkins-1/" rel="next" title="Git+Gitlab+Jenkins_1">
+                <i class="fa fa-chevron-left"></i> Git+Gitlab+Jenkins_1
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/02/23/Git-Gitlab-Jenkins-3/" rel="prev" title="Git+Gitlab+Jenkins_3">
+                Git+Gitlab+Jenkins_3 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80NTE0MS8yMTY1OA=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://s2.ax1x.com/2019/07/03/ZtLwdI.png" alt="Zhan Nan">
+            
+              <p class="site-author-name" itemprop="name">Zhan Nan</p>
+              <p class="site-description motion-element" itemprop="description">本站意在分享个人一些工作以及生活经验</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/opszn" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:mail@opszn.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope-square"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Git-Gitlab-Jenkins-2-Gitlab"><span class="nav-number">1.</span> <span class="nav-text">Git+Gitlab+Jenkins_2(Gitlab)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Gitlab与GitHub"><span class="nav-number">1.1.</span> <span class="nav-text">Gitlab与GitHub</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gitlab下载"><span class="nav-number">1.2.</span> <span class="nav-text">gitlab下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gitlab登录"><span class="nav-number">1.3.</span> <span class="nav-text">gitlab登录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开发者设置ssh密钥粘贴至gitlab"><span class="nav-number">1.4.</span> <span class="nav-text">开发者设置ssh密钥粘贴至gitlab</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建仓库"><span class="nav-number">1.5.</span> <span class="nav-text">创建仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#克隆远程仓库到本地"><span class="nav-number">1.6.</span> <span class="nav-text">克隆远程仓库到本地</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#在开发者电脑上配置身份标识"><span class="nav-number">1.6.1.</span> <span class="nav-text">在开发者电脑上配置身份标识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在开发者电脑上进行克隆并上传"><span class="nav-number">1.6.2.</span> <span class="nav-text">在开发者电脑上进行克隆并上传</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#持续集成（CI）"><span class="nav-number">1.7.</span> <span class="nav-text">持续集成（CI）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#持续交付（CD）"><span class="nav-number">1.8.</span> <span class="nav-text">持续交付（CD）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#持续部署（CD）"><span class="nav-number">1.9.</span> <span class="nav-text">持续部署（CD）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#蓝绿部署"><span class="nav-number">1.9.1.</span> <span class="nav-text">蓝绿部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#滚动更新"><span class="nav-number">1.9.2.</span> <span class="nav-text">滚动更新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#灰度发布（A-B测试、金丝雀部署）"><span class="nav-number">1.9.3.</span> <span class="nav-text">灰度发布（A/B测试、金丝雀部署）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#持续发布（CR）"><span class="nav-number">1.10.</span> <span class="nav-text">持续发布（CR）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#持续测试（CT）"><span class="nav-number">1.11.</span> <span class="nav-text">持续测试（CT）</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-github-alt" aria-hidden="true"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhan Nan</span>
+    <div class="powered-by">
+    <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span> |</span>
+    </div>
+
+ <div class="theme-info">
+      <span class="post-count">本站共计36.3k字</span>
+  </div>
+  
+</div>
+
+<!--
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+-->
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"left","width":100,"height":170},"mobile":{"show":false},"log":false});</script></body>
+</html>

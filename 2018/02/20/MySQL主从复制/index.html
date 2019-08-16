@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+  <script>(function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/ee194c93.js","daovoice")
+  daovoice('init', {
+  app_id: "ee194c93"
+});
+daovoice('update');
+  </script>
+  
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-bounce.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="主从复制,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="詹楠博客" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="MySQL主从复制应用背景随着访问量不断提升, 单台mysql不断地逼近承载的负载极限。所以我们希望能用多台服务器来提供服务，这样不仅可以多台mysql数据库分担负载，而且也在一定程度上提供了冗余，可以在实现了自动备份的基础上进一步提供服务可用性。 这样多台mysql服务器架构数据需要保持一致,  所以我们可以选用mysql主从复制架构来实现。 主从复制原理master将数据库的改变写入二进制日志">
+<meta name="keywords" content="主从复制">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL主从复制">
+<meta property="og:url" content="https://www.opszn.com/2018/02/20/MySQL主从复制/index.html">
+<meta property="og:site_name" content="詹楠博客">
+<meta property="og:description" content="MySQL主从复制应用背景随着访问量不断提升, 单台mysql不断地逼近承载的负载极限。所以我们希望能用多台服务器来提供服务，这样不仅可以多台mysql数据库分担负载，而且也在一定程度上提供了冗余，可以在实现了自动备份的基础上进一步提供服务可用性。 这样多台mysql服务器架构数据需要保持一致,  所以我们可以选用mysql主从复制架构来实现。 主从复制原理master将数据库的改变写入二进制日志">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://www.opszn.com/2018/02/20/MySQL主从复制/1.png">
+<meta property="og:image" content="https://www.opszn.com/2018/02/20/MySQL主从复制/2.png">
+<meta property="og:image" content="https://www.opszn.com/2018/02/20/MySQL主从复制/3.png">
+<meta property="og:image" content="https://www.opszn.com/2018/02/20/MySQL主从复制/4.png">
+<meta property="og:image" content="https://www.opszn.com/2018/02/20/MySQL主从复制/5.png">
+<meta property="og:image" content="https://www.opszn.com/2018/02/20/MySQL主从复制/6.png">
+<meta property="og:updated_time" content="2019-08-14T08:04:06.065Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL主从复制">
+<meta name="twitter:description" content="MySQL主从复制应用背景随着访问量不断提升, 单台mysql不断地逼近承载的负载极限。所以我们希望能用多台服务器来提供服务，这样不仅可以多台mysql数据库分担负载，而且也在一定程度上提供了冗余，可以在实现了自动备份的基础上进一步提供服务可用性。 这样多台mysql服务器架构数据需要保持一致,  所以我们可以选用mysql主从复制架构来实现。 主从复制原理master将数据库的改变写入二进制日志">
+<meta name="twitter:image" content="https://www.opszn.com/2018/02/20/MySQL主从复制/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://www.opszn.com/2018/02/20/MySQL主从复制/">
+
+
+
+
+
+  <title>MySQL主从复制 | 詹楠博客</title>
+  
+
+
+
+
+
+
+
+
+  <style>
+  .fock{
+  display: none;
+  }
+  @media (min-width: 768px) {
+  .fock{
+  display: inline;
+  }
+  }
+  
+  </style>
+</head>
+<script type="text/javascript" src="/js/src/love.js"></script>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+ 
+  
+  
+    
+  
+  
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <div class="fock">
+	<a href="https://github.com/opszn/opszn.github.io" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#fff; color:#151513; position: absolute; top: 0; border: 0; left: 0; transform: scale(-1, 1);" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+    </div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner">
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">詹楠博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">世间无限丹青手，一片伤心画不成。谁谓伤心画不成？画人心逐世人情。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home  //首页"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user  //关于"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags  //标签"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th  //分类"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive  //归档"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.opszn.com/2018/02/20/MySQL主从复制/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zhan Nan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://s2.ax1x.com/2019/07/03/ZtLwdI.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="詹楠博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MySQL主从复制</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-20T17:21:48+08:00">
+                2018-02-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.1k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  8
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="MySQL主从复制"><a href="#MySQL主从复制" class="headerlink" title="MySQL主从复制"></a>MySQL主从复制</h1><h2 id="应用背景"><a href="#应用背景" class="headerlink" title="应用背景"></a>应用背景</h2><p>随着访问量不断提升, 单台mysql不断地逼近承载的负载极限。所以我们希望能用多台服务器来提供服务，这样不仅可以多台mysql数据库分担负载，而且也在一定程度上提供了冗余，可以在实现了自动备份的基础上进一步提供服务可用性。</p>
+<p>这样多台mysql服务器架构数据需要保持一致,  所以我们可以选用mysql主从复制架构来实现。</p>
+<h2 id="主从复制原理"><a href="#主从复制原理" class="headerlink" title="主从复制原理"></a>主从复制原理</h2><p>master将数据库的改变写入二进制日志，slave同步这些二进制日志，并根据这些二进制日志进行数据重演操作，实现数据同步, 这种同步默认为单向, 异步的.</p>
+<p><img src="/2018/02/20/MySQL主从复制/1.png" alt></p>
+<p><strong>详细描述：</strong></p>
+<ol>
+<li>slave端的IO线程发送请求给master端的binlog dump线程。</li>
+<li>master端binlog dump线程获取二进制日志信息(文件名和位置信息)发送给slave端的IO线程。</li>
+<li>salve端IO线程获取到的内容依次写到slave端relay log里，并把master端的bin-log文件名和位置记录到master.info里。</li>
+<li>salve端的SQL线程，检测到relay  log中内容更新，就会解析relay log里更新的内容，并执行这些操作，从而达到和master数据一致。</li>
+</ol>
+<p><strong>常见复制模式：</strong></p>
+<ol>
+<li><p>一主一从（AB复制）：一般主写从读，可用于实现读写分离。</p>
+<p><img src="/2018/02/20/MySQL主从复制/2.png" alt></p>
+</li>
+<li><p>一主多从（并联复制）：分担了slave的读压力，增加了master传输binlog的压力，使用读多写少的场景。</p>
+<p><img src="/2018/02/20/MySQL主从复制/3.png" alt></p>
+</li>
+<li><p>级联复制：压力分担合适，但若某节点故障，后续节点将无法同步数据，并且此种模式延时很高。</p>
+<p><img src="/2018/02/20/MySQL主从复制/4.png" alt></p>
+</li>
+<li><p>双主：两节点均可读写，业务中一般还是一读一写。当master故障，slave也可以写，并且通过binlog同步至master。</p>
+<p><img src="/2018/02/20/MySQL主从复制/5.png" alt></p>
+</li>
+</ol>
+<h2 id="搭建思路解析"><a href="#搭建思路解析" class="headerlink" title="搭建思路解析"></a>搭建思路解析</h2><ol>
+<li>master和slave安装相同版本mysql</li>
+<li>master端必须开启二进制日志；slave端必须开启relay log日志, slave可不开二进制日志</li>
+<li>master端和slave端的server-id号必须不能一致。</li>
+<li>slave端配置向master来同步数据。<ul>
+<li>master端必须创建一个复制用户。</li>
+<li>保证master和slave端初始数据一致。</li>
+<li>配置主从复制（slave端）。</li>
+</ul>
+</li>
+</ol>
+<p>*<em>1.部分配置 *</em></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">master配置</span><br><span class="line"></span><br><span class="line">[mysqld]</span><br><span class="line">...</span><br><span class="line">log-bin=binlog</span><br><span class="line">server-id=<span class="number">100</span></span><br><span class="line">...</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">slave配置</span><br><span class="line"></span><br><span class="line">[mysqld]</span><br><span class="line">...</span><br><span class="line">server-id=<span class="number">200</span></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p><strong>2.master创建授权用户</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">grant replication slave on *.* to <span class="string">'slave'</span><span class="string">@'1.1.1.10' identified by 'password';</span></span><br><span class="line"><span class="string">flush privileges;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>3.查看binlog位置</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">show master status;</span><br><span class="line">+---------------+----------+--------------+------------------+-------------------+</span><br><span class="line">| File          | Position | Binlog_Do_DB | Binlog_Ignore_DB | Executed_Gtid_Set |</span><br><span class="line">+---------------+----------+--------------+------------------+-------------------+</span><br><span class="line">| binlog.<span class="number">000002</span> |      <span class="number">406</span> |              |                  |                   |</span><br><span class="line">+---------------+----------+--------------+------------------+-------------------+</span><br></pre></td></tr></table></figure>
+
+<p><strong>4.slave上配置复制连接</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@vm2 ~]<span class="comment"># /mysql56/bin/mysql -p</span></span><br><span class="line">Enter password:</span><br><span class="line"></span><br><span class="line">mysql&gt; change master to</span><br><span class="line">    -&gt; master_host=<span class="string">'1.1.1.10'</span>,</span><br><span class="line">    -&gt; master_user=<span class="string">'slave'</span>,</span><br><span class="line">    -&gt; master_password=<span class="string">'password'</span>,</span><br><span class="line">    -&gt; master_port=<span class="number">3307</span>,</span><br><span class="line">    -&gt; master_log_file=<span class="string">'binlog.000002'</span>,</span><br><span class="line">    -&gt; master_log_pos=<span class="number">406</span>;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>master_host</td>
+<td>master的ip</td>
+</tr>
+<tr>
+<td>master_user</td>
+<td>复制的用户</td>
+</tr>
+<tr>
+<td>master_password</td>
+<td>复制用户密码</td>
+</tr>
+<tr>
+<td>master_port</td>
+<td>master的端口号</td>
+</tr>
+<tr>
+<td>master_log_file</td>
+<td>指定复制开始的日志文件</td>
+</tr>
+<tr>
+<td>master_log_pos</td>
+<td>指定复制开始的日志位置(position)</td>
+</tr>
+</tbody></table>
+<p><strong>5.启动主从复制</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; start slave;</span><br><span class="line">mysql&gt; show slave status/G</span><br><span class="line">				......</span><br><span class="line">            Slave_IO_Running: Yes 	代表成功连接到master并且下载日志</span><br><span class="line">            Slave_SQL_Running: Yes 	代表成功执行日志中的SQL语句</span><br><span class="line">                ......</span><br></pre></td></tr></table></figure>
+
+<p><strong>小结：</strong></p>
+<p>1.此主从复制结构为单向异步的，master可以做写操作，slave不可写。</p>
+<p>2.master必须开启binlog。</p>
+<p>3双节点server-id需要不一致。</p>
+<h2 id="基于GTIDs的AB复制架构-M-S"><a href="#基于GTIDs的AB复制架构-M-S" class="headerlink" title="基于GTIDs的AB复制架构(M-S)"></a>基于GTIDs的AB复制架构(M-S)</h2><h3 id="GTIDS简介"><a href="#GTIDS简介" class="headerlink" title="GTIDS简介"></a><strong>GTIDS简介</strong></h3><p>什么是GTIDs以及有什么特点？</p>
+<p>GTIDs（Global transaction identifiers）全局事务标识符，是mysql 5.6新加入的一项技术</p>
+<ol>
+<li><p>当使用GTIDs时，每一个事务都可以被识别并且跟踪</p>
+</li>
+<li><p>添加新的slave或者当发生故障需要将master身份或者角色迁移到slave上时，都无需考虑是哪一个二进制日志以及哪个position值，<strong>极大简化了相关操作</strong></p>
+</li>
+<li><p>GTIDs是完全基于事务的，因此<strong>不支持MYISAM存储引擎</strong></p>
+</li>
+<li><p>GTID由source_id和transaction_id组成： </p>
+<p>1）source_id来自于server_uuid,可以在auto.cnf中看到</p>
+<p>2）transation_id是一个序列数字，自动生成.</p>
+</li>
+</ol>
+<p>通俗地说, <strong>==基于GTIDs的复制架构不用再烦恼指定哪个连接position了==</strong>。</p>
+<h3 id="搭建过程"><a href="#搭建过程" class="headerlink" title="搭建过程"></a><strong>搭建过程</strong></h3><p><strong>1.配置文件修改</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">master部分配置文件修改</span><br><span class="line"></span><br><span class="line">gtid-mode=on                    这一行开始后<span class="number">3</span>句需要在master配置文件里增加</span><br><span class="line">log-slave-updates=<span class="number">1</span>             将relay-log里的记录同步到bin-log日志中 </span><br><span class="line">enforce-gtid-consistency        强制一致性</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">slave部分配置文件修改</span><br><span class="line"></span><br><span class="line">log-bin=slave-binlog		这一行开始后<span class="number">4</span>句需要在slave配置文件里增加</span><br><span class="line">gtid-mode=on</span><br><span class="line">log-slave-updates=<span class="number">1</span></span><br><span class="line">enforce-gtid-consistency</span><br></pre></td></tr></table></figure>
+
+<p><strong>说明:</strong><br>1, 开启GITDs需要在master和slave上都配置gtid-mode，log-bin，log-slave-updates，enforce-gtid-consistency（该参数在5.6.9之前是–disable-gtid-unsafe-statement）<br>3, 基于GTIDs复制<strong>从服务器必须开启二进制日志！</strong></p>
+<p><strong>2.重新配置连接</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@vm2 ~]<span class="comment"># /mysql56/bin/mysql -p</span></span><br><span class="line">Enter password:</span><br><span class="line"></span><br><span class="line">mysql&gt; change master to</span><br><span class="line">    -&gt; master_host=<span class="string">'1.1.1.10'</span>,</span><br><span class="line">    -&gt; master_user=<span class="string">'slave'</span>,</span><br><span class="line">    -&gt; master_password=<span class="string">'password'</span>,</span><br><span class="line">    -&gt; master_port=<span class="number">3307</span>,</span><br><span class="line">    -&gt; master_auto_position=<span class="number">1</span>;		不用指定从哪个二进制的哪个positon开始复制了</span><br></pre></td></tr></table></figure>
+
+<h2 id="其他类型主从搭建思路"><a href="#其他类型主从搭建思路" class="headerlink" title="其他类型主从搭建思路"></a>其他类型主从搭建思路</h2><p>1.一主多从：几个从就做几次主从配置。</p>
+<p>2.双主：互为主从分别做一次主从配置。</p>
+<p>3.级联：中间的机器打开二进制日志和<code>log-slave-updates=1</code>参数然后master-slave1做一次AB复制, slave1-slave2再做一次AB复制。</p>
+<h2 id="半同步复制"><a href="#半同步复制" class="headerlink" title="半同步复制"></a>半同步复制</h2><p>上面我们提到的复制架构默认来说都是单向的异步的复制，也就是说主将日志信息发送给从，动作就结束了，不会验证从库是否接收完毕，这样性能固然最佳，但是其风险也是很大的。</p>
+<p>当主服务器或者从服务器发生故障时，极有可能从服务器没有接到主服务器发过来的binglog日志，这样就会导致主从数据不一致，甚至导致数据丢失。</p>
+<p>为了解决该问题，mysql5.5引入了半同步复制模式。</p>
+<p><img src="/2018/02/20/MySQL主从复制/6.png" alt></p>
+<p>所谓的半同步复制就是master每commit一个事务(简单来说就是做一个改变数据的操作）,要确保slave接受完主服务器发送的binlog日志文件并写入到自己的中继日志relay log里，然后会给master信号，告诉对方已经接收完毕，这样master才能把事物成功commit。这样就保证了master-slave的数据绝对的一致（但是以牺牲master的性能为代价).如果slave挂了,master不可能永远等待slave的信号,默认等待10秒则转为异步。(等待时间也是可以调整的)。</p>
+<h3 id="搭建过程-1"><a href="#搭建过程-1" class="headerlink" title="搭建过程"></a>搭建过程</h3><p><strong>1.前提</strong></p>
+<p>需要我们已经搭建了上述的异步复制的类型中的一种。</p>
+<p><strong>2.插件安装</strong></p>
+<p>master：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">install plugin rpl_semi_sync_master soname <span class="string">'semisync_master.so'</span>;</span><br><span class="line"></span><br><span class="line">查看是否安装成功</span><br><span class="line">mysql&gt; show global variables like <span class="string">'rpl_semi_sync%'</span>;</span><br><span class="line">+------------------------------------+-------+</span><br><span class="line">| Variable_name                      | Value |</span><br><span class="line">+------------------------------------+-------+</span><br><span class="line">| rpl_semi_sync_master_enabled       | OFF   |是否启用master的半同步复制</span><br><span class="line">| rpl_semi_sync_master_timeout       | <span class="number">10000</span> |默认主等待从返回信息的超时间时间，<span class="number">10</span>秒。动态可调</span><br><span class="line">| rpl_semi_sync_master_trace_level   | <span class="number">32</span>    |用于开启半同步复制模式时的调试级别，默认是<span class="number">32</span> </span><br><span class="line">| rpl_semi_sync_master_wait_no_slave | ON    |是否允许每个事物的提交都要等待slave的信号</span><br><span class="line">+------------------------------------+-------+</span><br></pre></td></tr></table></figure>
+
+<p>slave:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> install plugin rpl_semi_sync_slave soname <span class="string">'semisync_slave.so'</span>;</span><br><span class="line"> </span><br><span class="line"> mysql&gt; show global variables like <span class="string">'rpl_semi_sync%'</span>;</span><br><span class="line">+---------------------------------+-------+</span><br><span class="line">| Variable_name                   | Value |</span><br><span class="line">+---------------------------------+-------+</span><br><span class="line">| rpl_semi_sync_slave_enabled     | OFF   |   slave是否启用半同步复制</span><br><span class="line">| rpl_semi_sync_slave_trace_level | <span class="number">32</span>    |</span><br><span class="line">+---------------------------------+-------+</span><br></pre></td></tr></table></figure>
+
+<p><strong>3.激活</strong></p>
+<p>master：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"> set global rpl_semi_sync_master_enabled =on;</span><br><span class="line"> show global variables like <span class="string">'rpl_semi_sync%'</span>;</span><br><span class="line"> </span><br><span class="line"> mysql&gt;  show global variables like <span class="string">'rpl_semi_sync%'</span>;</span><br><span class="line">+------------------------------------+-------+</span><br><span class="line">| Variable_name                      | Value |</span><br><span class="line">+------------------------------------+-------+</span><br><span class="line">| rpl_semi_sync_master_enabled       | ON    |	  现在为ON了</span><br><span class="line">| rpl_semi_sync_master_timeout       | <span class="number">10000</span> |</span><br><span class="line">| rpl_semi_sync_master_trace_level   | <span class="number">32</span>    |</span><br><span class="line">| rpl_semi_sync_master_wait_no_slave | ON    |</span><br><span class="line">+------------------------------------+-------+</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">show global status like <span class="string">'rpl_semi_sync%'</span>;</span><br><span class="line">+--------------------------------------------+-------+</span><br><span class="line">| Variable_name                              | Value |</span><br><span class="line">+--------------------------------------------+-------+</span><br><span class="line">| Rpl_semi_sync_master_clients               | <span class="number">1</span>     |有一个从服务器启用半同步复制</span><br><span class="line">| Rpl_semi_sync_master_net_avg_wait_time     | <span class="number">0</span>     |master等slave的平均等待时间。单位毫秒</span><br><span class="line">| Rpl_semi_sync_master_net_wait_time         | <span class="number">0</span>     |master总的等待时间。单位毫秒</span><br><span class="line">| Rpl_semi_sync_master_net_waits             | <span class="number">0</span>     |master等待slave回复的总的等待次数</span><br><span class="line">| Rpl_semi_sync_master_no_times              | <span class="number">0</span>     |master关闭半同步复制的次数</span><br><span class="line">| Rpl_semi_sync_master_no_tx                 | <span class="number">0</span>     |表示从服务器确认的不成功提交的数量</span><br><span class="line">| Rpl_semi_sync_master_status                | ON    |标记master现在是否是半同步复制状态</span><br><span class="line">| Rpl_semi_sync_master_timefunc_failures     | <span class="number">0</span>     |master调用时间失败的次数	</span><br><span class="line">| Rpl_semi_sync_master_tx_avg_wait_time      | <span class="number">0</span>     |master花在每个事务上的平均等待时间</span><br><span class="line">| Rpl_semi_sync_master_tx_wait_time          | <span class="number">0</span>     |master花在事物上总的等待时间</span><br><span class="line">| Rpl_semi_sync_master_tx_waits              | <span class="number">0</span>     |master事物等待次数</span><br><span class="line">| Rpl_semi_sync_master_wait_pos_backtraverse | <span class="number">0</span>     |后来的先到了，而先来的还没有到的次数</span><br><span class="line">| Rpl_semi_sync_master_wait_sessions         | <span class="number">0</span>     |多少个session因为slave回复而造成等待</span><br><span class="line">| Rpl_semi_sync_master_yes_tx                | <span class="number">0</span>     |表示从服务器确认的成功提交数量</span><br><span class="line">+--------------------------------------------+-------+</span><br></pre></td></tr></table></figure>
+
+<p>slave:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">set global rpl_semi_sync_slave_enabled=on;</span><br><span class="line">show global variables like <span class="string">'rpl_semi_sync%'</span>;</span><br><span class="line"> +----------------------------+-------+</span><br><span class="line">| Variable_name              | Value |</span><br><span class="line">+----------------------------+-------+</span><br><span class="line">| Rpl_semi_sync_slave_status | ON    |</span><br><span class="line">+----------------------------+-------+</span><br></pre></td></tr></table></figure>
+
+<p><strong>4.重启slave的IO线程</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">stop slave IO_THREAD;</span><br><span class="line">start slave IO_THREAD;</span><br></pre></td></tr></table></figure>
+
+<p><strong>小结：</strong></p>
+<p>当slave从库的IO_Thread 线程将binlog日志接受完毕后，要给master一个确认，如果超过10s未收到slave的接收确认信号，那么就会自动转换为传统的异步复制模式。</p>
+
+      
+    </div>
+    
+    
+    
+    <div>
+         
+         <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-angellist"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+         
+    </div>
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/主从复制/" rel="tag"><i class="fa fa-tag"></i> 主从复制</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/25/MySQL读写分离/" rel="prev" title="MySQL读写分离">
+                MySQL读写分离 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80NTE0MS8yMTY1OA=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://s2.ax1x.com/2019/07/03/ZtLwdI.png" alt="Zhan Nan">
+            
+              <p class="site-author-name" itemprop="name">Zhan Nan</p>
+              <p class="site-description motion-element" itemprop="description">本站意在分享个人一些工作以及生活经验</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/opszn" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:mail@opszn.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope-square"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MySQL主从复制"><span class="nav-number">1.</span> <span class="nav-text">MySQL主从复制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#应用背景"><span class="nav-number">1.1.</span> <span class="nav-text">应用背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主从复制原理"><span class="nav-number">1.2.</span> <span class="nav-text">主从复制原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建思路解析"><span class="nav-number">1.3.</span> <span class="nav-text">搭建思路解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于GTIDs的AB复制架构-M-S"><span class="nav-number">1.4.</span> <span class="nav-text">基于GTIDs的AB复制架构(M-S)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GTIDS简介"><span class="nav-number">1.4.1.</span> <span class="nav-text">GTIDS简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#搭建过程"><span class="nav-number">1.4.2.</span> <span class="nav-text">搭建过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他类型主从搭建思路"><span class="nav-number">1.5.</span> <span class="nav-text">其他类型主从搭建思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#半同步复制"><span class="nav-number">1.6.</span> <span class="nav-text">半同步复制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#搭建过程-1"><span class="nav-number">1.6.1.</span> <span class="nav-text">搭建过程</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-github-alt" aria-hidden="true"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zhan Nan</span>
+    <div class="powered-by">
+    <span id="busuanzi_container_site_pv">本站总访问量<span id="busuanzi_value_site_pv"></span> |</span>
+    </div>
+
+ <div class="theme-info">
+      <span class="post-count">本站共计36.3k字</span>
+  </div>
+  
+</div>
+
+<!--
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+-->
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/hijiki.model.json"},"display":{"position":"left","width":100,"height":170},"mobile":{"show":false},"log":false});</script></body>
+</html>
