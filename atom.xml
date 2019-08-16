@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>詹楠博客</title>
+  <title>Zn`s blog</title>
   
-  <subtitle>世间无限丹青手，一片伤心画不成。谁谓伤心画不成？画人心逐世人情。</subtitle>
+  
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.opszn.com/"/>
